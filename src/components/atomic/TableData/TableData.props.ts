@@ -13,6 +13,7 @@ export interface TableDataProps extends DetailedHTMLProps<HTMLAttributes<HTMLTab
 	greyText?: string | number;
 	greyTextFontSize?: FontTypes;
 	greyTextPosition?: TextPosition;
+	greyTextSymbol?: string;
 	symbol?: string;
 	symbolPosition?: SybmolPosition;
 	arrowType?: ArrowType;

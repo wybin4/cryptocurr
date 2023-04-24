@@ -30,3 +30,20 @@
 .strip {
 	margin-top: 10px;
 }
+
+.greyText {
+	font-weight: 600;
+	color: var(--dark-grey);
+}
+
+.littleText {
+	font-size: 14px;
+}
+
+.standardText {
+	font-size: 16px;
+}
+
+.largeText {
+	font-size: 18px;
+}

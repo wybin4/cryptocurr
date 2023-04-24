@@ -9,7 +9,7 @@ import { TooltipContext } from '../Tooltip/Tooltip';
 import { TooltipModel } from '../Tooltip/Tooltip.props';
 import { StripModel } from '../Strip/Strip.props';
 
-export const TableData = ({ mainTextWeight = 'medium', strip, arrowType, commaSeparate = true, symbol, symbolPosition, fixed = 2, greyText, greyTextFontSize = 'standard', greyTextPosition = 'right', children, className, ...props }: TableDataProps): JSX.Element => {
+export const TableData = ({ mainTextWeight = 'medium', strip, arrowType, commaSeparate = true, symbol, symbolPosition, fixed = 2, greyText, greyTextFontSize = 'standard', greyTextPosition = 'right', greyTextSymbol = '', children, className, ...props }: TableDataProps): JSX.Element => {
 	const { showTooltip, hideTooltip } = useContext(TooltipContext);
 
 	const handleTableDataMouseEnter = (e: React.MouseEvent<HTMLDivElement>, strip: StripModel, symbol: string) => {
@@ -43,19 +43,27 @@ export const TableData = ({ mainTextWeight = 'medium', strip, arrowType, commaSe
 		}
 		return convertAndFix(val, symbol, symbolPosition);
 	};
-
+	const getGreyText = (greyTextFontSize: string, greyText: string | number, greyTextPosition: string) => {
+		return (
+			<>
+				<span className={cn(styles.greyText, {
+					[styles.largeText]: greyTextFontSize === 'large',
+					[styles.standardText]: greyTextFontSize === 'standard',
+					[styles.littleText]: greyTextFontSize === 'little',
+					[styles.rightText]: greyTextPosition === 'right',
+					[styles.bottomText]: greyTextPosition === 'bottom',
+				})}>{greyText.toLocaleString('en', {
+					minimumFractionDigits: fixed,
+					maximumFractionDigits: fixed
+				})}{greyTextSymbol}</span>
+			</>
+		);
+	}
 	return (
 		<td
 			className={cn(className, styles.td)}
 			{...props}
 		>
-			{greyText && <span className={cn(styles.greyText, {
-				[styles.largeText]: greyTextFontSize === 'large',
-				[styles.standardText]: greyTextFontSize === 'standard',
-				[styles.littleText]: greyTextFontSize === 'little',
-				[styles.rightText]: greyTextPosition === 'right',
-				[styles.bottomText]: greyTextPosition === 'bottom',
-			})}>{greyText}</span>}
 			{arrowType && <ArrowIcon className={cn(styles.arrow, {
 				[styles.arrowTop]: arrowType === 'top',
 				[styles.arrowBottom]: arrowType === 'bottom'
@@ -76,6 +84,8 @@ export const TableData = ({ mainTextWeight = 'medium', strip, arrowType, commaSe
 						onMouseLeave={onMouseLeave}
 					/>}
 			</span>
+			{greyTextPosition === 'bottom' && <br />}
+			{greyText && getGreyText(greyTextFontSize, greyText, greyTextPosition)}
 		</td >
 	);
 };

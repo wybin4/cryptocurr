@@ -18,11 +18,21 @@ export const TableRow = ({ data, className, ...props }: TableRowProps): JSX.Elem
 			<td>{convertAndFix(data.priceUsd, '$', 'before')}</td>
 			<td>{convertAndFix(data.changePercent24Hr)}</td>*/}
 			<TableData fixed={0}>{data.rank}</TableData>
-			<TableData fixed={0} mainTextWeight='semi'>{data.name}</TableData>
+			<TableData fixed={0} mainTextWeight='semi' greyText={' ' + data.symbol}>{data.name}</TableData>
 			<TableData symbol='$' symbolPosition='before'>{data.priceUsd}</TableData>
 			<TableData symbol='%' symbolPosition='after' arrowType={parseFloat(data.changePercent24Hr) < 0 ? 'bottom' : 'top'}>{data.changePercent24Hr}</TableData>
 			<TableData symbol='$' symbolPosition='before' fixed={0}>{data.marketCapUsd}</TableData>
-			<TableData symbol='$' symbolPosition='before' fixed={0}>{data.volumeUsd24Hr}</TableData>
+			<TableData
+				symbol='$'
+				symbolPosition='before'
+				fixed={0}
+				greyText={parseFloat(data.volumeUsd24Hr) / parseFloat(data.priceUsd)}
+				greyTextSymbol={' ' + data.symbol}
+				greyTextPosition='bottom'
+				greyTextFontSize='little'
+			>
+				{data.volumeUsd24Hr}
+			</TableData>
 			<TableData
 				symbol={' ' + data.symbol}
 				symbolPosition='after'
