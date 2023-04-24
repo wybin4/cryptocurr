@@ -1,0 +1,19 @@
+.strip {
+	height: 7px;
+	background: var(--light-grey);
+	position: relative;
+
+	border-radius: 3px;
+
+	cursor: pointer;
+}
+
+.fill {
+	left: 0;
+	position: absolute;
+	height: 7px;
+
+	border-radius: 3px;
+
+	background: var(--medium-grey);
+}

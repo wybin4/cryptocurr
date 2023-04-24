@@ -1,0 +1,87 @@
+.tooltip {
+	width: 425px;
+	height: 134px;
+
+	background: var(--white);
+	border-radius: 12px;
+	padding: 15px 22px;
+
+	filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.05));
+
+	display: grid;
+	grid-template-columns: [start] auto [middle] 1fr [end];
+}
+
+.toolBold {
+	font-weight: 500;
+	line-height: 17px;
+}
+
+.toolGrey {
+	color: var(--dark-grey);
+}
+
+.percent {
+	grid-column: middle / end;
+	justify-self: end;
+}
+
+.percentText {
+	grid-column: start / middle;
+	justify-self: start;
+}
+
+.supply {
+	grid-column: middle / end;
+	justify-self: end;
+}
+
+.maxSupply {
+	grid-column: middle / end;
+	justify-self: end;
+}
+
+.supplyText {
+	grid-column: start / middle;
+	justify-self: start;
+}
+
+.maxSupplyText {
+	grid-column: start / middle;
+	justify-self: start;
+}
+
+.strip {
+	grid-column: start / end;
+	cursor: auto !important;
+}
+
+.price {
+	grid-column: middle / end;
+	justify-self: end;
+}
+
+.priceText {
+	grid-column: start / middle;
+	justify-self: start;
+}
+
+.vol {
+	grid-column: middle / end;
+	justify-self: end;
+}
+
+.volText {
+	grid-column: start / middle;
+	justify-self: start;
+}
+
+.dateText {
+	grid-column: start / middle;
+	justify-self: start;
+}
+
+.timeText {
+	grid-column: middle / end;
+	justify-self: end;
+}
