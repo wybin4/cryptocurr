@@ -3,6 +3,7 @@ import cn from 'classnames';
 import styles from './Tooltip.module.css';
 import { Strip } from '../Strip/Strip';
 import { ReactNode, createContext, useState } from 'react';
+import { motion } from 'framer-motion';
 
 interface ITooltipContext {
 	showTooltip: (tooltip: TooltipModel, position: { x: number; y: number }) => void;
@@ -34,11 +35,14 @@ export const TooltipProvider = ({ children }: IProps): JSX.Element => {
 	return (
 		<TooltipContext.Provider value={{ showTooltip, hideTooltip }}>
 			{tooltip && (
-				<Tooltip
-					tooltip={tooltip}
-					x={position.x}
-					y={position.y}
-				/>
+				<motion.div
+					initial={{ opacity: 0, y: -10 }}
+					animate={{ opacity: 1, y: 0 }}
+					exit={{ opacity: 0, y: -10 }}
+					transition={{ duration: 0.3 }}
+				>
+					<Tooltip tooltip={tooltip} x={position.x} y={position.y} />
+				</motion.div>
 			)}
 			{children}
 		</TooltipContext.Provider>
