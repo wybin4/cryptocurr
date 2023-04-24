@@ -2,6 +2,14 @@
 	height: 80px;
 }
 
+.medium {
+	font-weight: 500;
+}
+
+.semi {
+	font-weight: 600;
+}
+
 .arrowTop {
 	fill: var(--green);
 }

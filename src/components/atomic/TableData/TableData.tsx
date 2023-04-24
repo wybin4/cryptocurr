@@ -9,7 +9,7 @@ import { TooltipContext } from '../Tooltip/Tooltip';
 import { TooltipModel } from '../Tooltip/Tooltip.props';
 import { StripModel } from '../Strip/Strip.props';
 
-export const TableData = ({ strip, arrowType, commaSeparate = true, symbol, symbolPosition, fixed = 2, greyText, greyTextFontSize = 'standard', greyTextPosition = 'right', children, className, ...props }: TableDataProps): JSX.Element => {
+export const TableData = ({ mainTextWeight = 'medium', strip, arrowType, commaSeparate = true, symbol, symbolPosition, fixed = 2, greyText, greyTextFontSize = 'standard', greyTextPosition = 'right', children, className, ...props }: TableDataProps): JSX.Element => {
 	const { showTooltip, hideTooltip } = useContext(TooltipContext);
 
 	const handleTableDataMouseEnter = (e: React.MouseEvent<HTMLDivElement>, strip: StripModel, symbol: string) => {
@@ -64,7 +64,10 @@ export const TableData = ({ strip, arrowType, commaSeparate = true, symbol, symb
 				[styles.mainTextGreen]: arrowType === 'top',
 				[styles.mainTextRed]: arrowType === 'bottom'
 			})}>
-				{children && checkChildren(children, symbol, symbolPosition, fixed, commaSeparate)}
+				<span className={cn({
+					[styles.semi]: mainTextWeight === 'semi',
+					[styles.medium]: mainTextWeight === 'medium'
+				})}>{children && checkChildren(children, symbol, symbolPosition, fixed, commaSeparate)}</span>
 				{(strip && strip.max !== 0) &&
 					<Strip
 						className={styles.strip}
