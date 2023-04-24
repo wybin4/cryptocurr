@@ -1,5 +1,17 @@
 .td {
 	height: 80px;
+
+	position: relative;
+	vertical-align: middle;
+}
+
+.twoLines {
+	padding-top: 19px;
+}
+
+.td .strip {
+	position: absolute;
+	right: 0;
 }
 
 .medium {
@@ -34,6 +46,13 @@
 .greyText {
 	font-weight: 600;
 	color: var(--dark-grey);
+	margin-top: 10px;
+}
+
+.bottomGreyText {
+	display: block;
+
+	margin-top: 5px;
 }
 
 .littleText {
@@ -46,4 +65,13 @@
 
 .largeText {
 	font-size: 18px;
+}
+
+.alignStart {
+	text-align: start;
+
+}
+
+.alignEnd {
+	text-align: end;
 }

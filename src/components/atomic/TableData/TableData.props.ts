@@ -6,11 +6,13 @@ export type ArrowType = 'top' | 'bottom';
 export type FontTypes = 'little' | 'standard' | 'large';
 export type TextPosition = 'right' | 'bottom';
 export type TextWeight = 'semi' | 'medium';
+export type TypeAlign = 'start' | 'end';
 
 export interface TableDataProps extends DetailedHTMLProps<HTMLAttributes<HTMLTableCellElement>, HTMLTableCellElement> {
 	children: ReactNode;
 	image?: string;
 	imageAlt?: string;
+	horizontalAlign?: TypeAlign;
 	greyText?: string | number;
 	greyTextFontSize?: FontTypes;
 	greyTextPosition?: TextPosition;

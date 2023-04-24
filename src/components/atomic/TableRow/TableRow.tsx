@@ -24,12 +24,13 @@ export const TableRow = ({ data, className, ...props }: TableRowProps): JSX.Elem
 				greyText={' ' + data.symbol}
 				image={`https://assets.coincap.io/assets/icons/${data.symbol.toLowerCase()}@2x.png`}
 				imageAlt={data.id}
+				horizontalAlign='start'
 			>
 				{data.name}
 			</TableData>
-			<TableData symbol='$' symbolPosition='before'>{data.priceUsd}</TableData>
-			<TableData symbol='%' symbolPosition='after' arrowType={parseFloat(data.changePercent24Hr) < 0 ? 'bottom' : 'top'}>{data.changePercent24Hr}</TableData>
-			<TableData symbol='$' symbolPosition='before' fixed={0}>{data.marketCapUsd}</TableData>
+			<TableData symbol='$' symbolPosition='before' horizontalAlign='end'>{data.priceUsd}</TableData>
+			<TableData symbol='%' symbolPosition='after' horizontalAlign='end' arrowType={parseFloat(data.changePercent24Hr) < 0 ? 'bottom' : 'top'}>{data.changePercent24Hr}</TableData>
+			<TableData symbol='$' symbolPosition='before' horizontalAlign='end' fixed={0}>{data.marketCapUsd}</TableData>
 			<TableData
 				symbol='$'
 				symbolPosition='before'
@@ -38,6 +39,7 @@ export const TableRow = ({ data, className, ...props }: TableRowProps): JSX.Elem
 				greyTextSymbol={' ' + data.symbol}
 				greyTextPosition='bottom'
 				greyTextFontSize='little'
+				horizontalAlign='end'
 			>
 				{data.volumeUsd24Hr}
 			</TableData>
@@ -46,6 +48,7 @@ export const TableRow = ({ data, className, ...props }: TableRowProps): JSX.Elem
 				symbolPosition='after'
 				fixed={0}
 				strip={{ max: data.maxSupply ? parseFloat(data.maxSupply) : 0, fill: parseFloat(data.supply) }}
+				horizontalAlign='end'
 			>
 				{data.supply}
 			</TableData>

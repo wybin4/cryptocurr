@@ -10,7 +10,7 @@ import { TooltipContext } from '../Tooltip/Tooltip';
 import { TooltipModel } from '../Tooltip/Tooltip.props';
 import { StripModel } from '../Strip/Strip.props';
 
-export const TableData = ({ image, imageAlt, mainTextWeight = 'medium', strip, arrowType, commaSeparate = true, symbol, symbolPosition, fixed = 2, greyText, greyTextFontSize = 'standard', greyTextPosition = 'right', greyTextSymbol = '', children, className, ...props }: TableDataProps): JSX.Element => {
+export const TableData = ({ horizontalAlign, image, imageAlt, mainTextWeight = 'medium', strip, arrowType, commaSeparate = true, symbol, symbolPosition, fixed = 2, greyText, greyTextFontSize = 'standard', greyTextPosition = 'right', greyTextSymbol = '', children, className, ...props }: TableDataProps): JSX.Element => {
 	const { showTooltip, hideTooltip } = useContext(TooltipContext);
 
 	const handleTableDataMouseEnter = (e: React.MouseEvent<HTMLDivElement>, strip: StripModel, symbol: string) => {
@@ -62,7 +62,11 @@ export const TableData = ({ image, imageAlt, mainTextWeight = 'medium', strip, a
 	}
 	return (
 		<td
-			className={cn(className, styles.td)}
+			className={cn(className, styles.td, {
+				[styles.alignStart]: horizontalAlign === 'start',
+				[styles.alignEnd]: horizontalAlign === 'end',
+				[styles.twoLines]: greyTextPosition === 'bottom'
+			})}
 			{...props}
 		>
 			{image && <Image type='table' src={image} alt={imageAlt ? imageAlt : 'crypto-img'} />}
@@ -86,8 +90,13 @@ export const TableData = ({ image, imageAlt, mainTextWeight = 'medium', strip, a
 						onMouseLeave={onMouseLeave}
 					/>}
 			</span>
-			{greyTextPosition === 'bottom' && <br />}
-			{greyText && getGreyText(greyTextFontSize, greyText, greyTextPosition)}
+			{/* {greyTextPosition === 'bottom' && greyText && <div className={styles.greyTextBottom}>{getGreyText(greyTextFontSize, greyText, greyTextPosition)}</div>}
+			{greyTextPosition === 'right' && greyText && <span>{getGreyText(greyTextFontSize, greyText, greyTextPosition)}</span>} */}
+			<span className={cn({
+				[styles.bottomGreyText]: greyTextPosition === 'bottom'
+			})}>
+				{greyText && getGreyText(greyTextFontSize, greyText, greyTextPosition)}
+			</span>
 		</td >
 	);
 };
