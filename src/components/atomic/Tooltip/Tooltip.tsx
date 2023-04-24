@@ -1,12 +1,55 @@
-import { TooltipProps } from './Tooltip.props';
+import { TooltipModel, TooltipProps } from './Tooltip.props';
 import cn from 'classnames';
 import styles from './Tooltip.module.css';
 import { Strip } from '../Strip/Strip';
+import { ReactNode, createContext, useState } from 'react';
 
-export const Tooltip = ({ tooltip, className, ...props }: TooltipProps): JSX.Element => {
+interface ITooltipContext {
+	showTooltip: (tooltip: TooltipModel, position: { x: number; y: number }) => void;
+	hideTooltip: () => void;
+}
+
+export const TooltipContext = createContext<ITooltipContext>({
+	showTooltip: () => { },
+	hideTooltip: () => { },
+});
+interface IProps {
+	children: ReactNode;
+}
+// Создаем компонент провайдера контекста
+export const TooltipProvider = ({ children }: IProps): JSX.Element => {
+	const [tooltip, setTooltip] = useState<TooltipModel | null>(null);
+	const [position, setPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+
+	// Определяем функции для показа/скрытия тултипа
+	const showTooltip = (tooltip: TooltipModel, position: { x: number; y: number }) => {
+		setTooltip(tooltip);
+		setPosition(position);
+	};
+	const hideTooltip = () => {
+		setTooltip(null);
+	};
+
+	// Возвращаем провайдер контекста
+	return (
+		<TooltipContext.Provider value={{ showTooltip, hideTooltip }}>
+			{tooltip && (
+				<Tooltip
+					tooltip={tooltip}
+					x={position.x}
+					y={position.y}
+				/>
+			)}
+			{children}
+		</TooltipContext.Provider>
+	);
+};
+
+export const Tooltip = ({ x, y, tooltip, className, ...props }: TooltipProps): JSX.Element => {
 	return (
 		<div
 			className={cn(className, styles.tooltip)}
+			style={{ top: y, left: x }}
 			{...props}
 		>
 			{tooltip.strip && <>

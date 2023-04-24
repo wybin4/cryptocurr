@@ -1,12 +1,29 @@
-import { ReactNode } from 'react';
+import { ReactNode, useContext } from 'react';
 import styles from './TableData.module.css';
 import { TableDataProps } from './TableData.props';
 import cn from 'classnames';
 import { SybmolPosition, convertAndFix } from '../../../helpers/convert';
 import { ReactComponent as ArrowIcon } from './arrow.svg';
 import { Strip } from '../Strip/Strip';
+import { TooltipContext } from '../Tooltip/Tooltip';
+import { TooltipModel } from '../Tooltip/Tooltip.props';
+import { StripModel } from '../Strip/Strip.props';
 
 export const TableData = ({ strip, arrowType, commaSeparate = true, symbol, symbolPosition, fixed = 2, greyText, greyTextFontSize = 'standard', greyTextPosition = 'right', children, className, ...props }: TableDataProps): JSX.Element => {
+	const { showTooltip, hideTooltip } = useContext(TooltipContext);
+
+	const handleTableDataMouseEnter = (e: React.MouseEvent<HTMLDivElement>, strip: StripModel, symbol: string) => {
+		const tooltip: TooltipModel = { strip: strip, symbol: symbol };
+		const element = e.target as HTMLElement;
+		const rect = element.getBoundingClientRect();
+		const position = { x: rect.left + window.scrollX - 100, y: rect.top + window.scrollY + 30 };
+		showTooltip(tooltip, position);
+	};
+
+	const onMouseLeave = () => {
+		hideTooltip();
+	};
+
 	const checkChildren = (children: ReactNode, symbol?: string, symbolPosition?: SybmolPosition, fixed?: number, commaSeparate?: boolean) => {
 		if (!children) {
 			return children;
@@ -52,7 +69,8 @@ export const TableData = ({ strip, arrowType, commaSeparate = true, symbol, symb
 					<Strip
 						className={styles.strip}
 						strip={strip}
-						onMouseEnter={() => console.log(strip.fill, strip.max)}
+						onMouseEnter={(e: React.MouseEvent<HTMLDivElement>) => handleTableDataMouseEnter(e, strip, symbol ? symbol : '')}
+						onMouseLeave={onMouseLeave}
 					/>}
 			</span>
 		</td >

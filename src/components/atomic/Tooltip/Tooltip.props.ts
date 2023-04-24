@@ -18,4 +18,6 @@ export type TooltipModel = XOR<graphTooltip, percentTooltip>;
 
 export interface TooltipProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
 	tooltip: TooltipModel;
+	x: number;
+	y: number;
 }

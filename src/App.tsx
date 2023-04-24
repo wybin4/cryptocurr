@@ -1,10 +1,12 @@
 import React from 'react';
 import './App.css';
-import { RateTable } from './components';
+import { RateTable, TooltipProvider } from './components';
 function App() {
   return (
     <div className="App">
-      <RateTable />
+      <TooltipProvider>
+        <RateTable />
+      </TooltipProvider>
     </div>
   );
 }
