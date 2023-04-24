@@ -5,11 +5,12 @@ import cn from 'classnames';
 import { SybmolPosition, convertAndFix } from '../../../helpers/convert';
 import { ReactComponent as ArrowIcon } from './arrow.svg';
 import { Strip } from '../Strip/Strip';
+import { Image } from '../Image/Image';
 import { TooltipContext } from '../Tooltip/Tooltip';
 import { TooltipModel } from '../Tooltip/Tooltip.props';
 import { StripModel } from '../Strip/Strip.props';
 
-export const TableData = ({ mainTextWeight = 'medium', strip, arrowType, commaSeparate = true, symbol, symbolPosition, fixed = 2, greyText, greyTextFontSize = 'standard', greyTextPosition = 'right', greyTextSymbol = '', children, className, ...props }: TableDataProps): JSX.Element => {
+export const TableData = ({ image, imageAlt, mainTextWeight = 'medium', strip, arrowType, commaSeparate = true, symbol, symbolPosition, fixed = 2, greyText, greyTextFontSize = 'standard', greyTextPosition = 'right', greyTextSymbol = '', children, className, ...props }: TableDataProps): JSX.Element => {
 	const { showTooltip, hideTooltip } = useContext(TooltipContext);
 
 	const handleTableDataMouseEnter = (e: React.MouseEvent<HTMLDivElement>, strip: StripModel, symbol: string) => {
@@ -64,6 +65,7 @@ export const TableData = ({ mainTextWeight = 'medium', strip, arrowType, commaSe
 			className={cn(className, styles.td)}
 			{...props}
 		>
+			{image && <Image type='table' src={image} alt={imageAlt ? imageAlt : 'crypto-img'} />}
 			{arrowType && <ArrowIcon className={cn(styles.arrow, {
 				[styles.arrowTop]: arrowType === 'top',
 				[styles.arrowBottom]: arrowType === 'bottom'

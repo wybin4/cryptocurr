@@ -10,6 +10,7 @@ export type TextWeight = 'semi' | 'medium';
 export interface TableDataProps extends DetailedHTMLProps<HTMLAttributes<HTMLTableCellElement>, HTMLTableCellElement> {
 	children: ReactNode;
 	image?: string;
+	imageAlt?: string;
 	greyText?: string | number;
 	greyTextFontSize?: FontTypes;
 	greyTextPosition?: TextPosition;
