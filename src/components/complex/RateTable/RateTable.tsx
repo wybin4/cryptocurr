@@ -1,8 +1,7 @@
-import { useEffect, useReducer, useState } from 'react';
+import { useEffect, useReducer } from 'react';
 import { TableRow } from '../../atomic/TableRow/TableRow';
 import { RateTableProps, SortEnum } from './RateTable.props';
 import axios from 'axios';
-import { RowModel } from '../../atomic/TableRow/TableRow.props';
 import { TableHead } from '../../atomic/TableHead/TableHead';
 import cn from 'classnames';
 import styles from './RateTable.module.css';
