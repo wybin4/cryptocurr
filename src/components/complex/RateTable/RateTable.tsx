@@ -28,7 +28,6 @@ export const RateTable = ({ className, ...props }: RateTableProps): JSX.Element 
 	const whatIsSupply = `Количество монет, которое циркулирует на рынке и находится в публичном обращении. Это аналог текущих акций на фондовом рынке.`;
 	const [data, setData] = useState<RowModel[]>();
 
-
 	const getData = async () => {
 		let response = null;
 		new Promise(async (resolve, reject) => {

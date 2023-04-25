@@ -1,12 +1,43 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { TableRowProps } from './TableRow.props';
 import styles from './TableRow.module.css';
 import { TableData } from '../TableData/TableData';
 import cn from 'classnames';
+import { Sparkline } from '../Sparkline/Sparkline';
+import axios from 'axios';
+import { SparklineDataModel } from '../Sparkline/Sparkline.props';
+
 // import { Strip } from '../Strip/Strip';
 // import { Tooltip } from '../Tooltip/Tooltip';
 
 export const TableRow = ({ data, className, ...props }: TableRowProps): JSX.Element => {
+	const getSparklineData = async (name: string): Promise<SparklineDataModel[]> => {
+		try {
+			const now = Date.now();
+			const oneWeekAgo = now - 7 * 24 * 60 * 60 * 1000;
+			const response = await axios.get(`https://api.coincap.io/v2/assets/${name}/history?interval=h1&start=${oneWeekAgo}&end=${now}`);
+			return response.data.data;
+		} catch (ex) {
+			console.error(ex);
+			return [];
+		}
+	};
+
+	const [sparklineData, setSparklineData] = useState<SparklineDataModel[]>([]);
+
+	useEffect(() => {
+		const fetchData = async () => {
+			const sparklData = await getSparklineData(data.id);
+			if (sparklData) {
+				setSparklineData(sparklData);
+			}
+			else {
+				throw Error('Невозможно получить данные для графиков');
+			}
+		};
+		fetchData();
+	}, [data.id]);
+
 	return (
 		<tr
 			key={data.id}
@@ -52,6 +83,9 @@ export const TableRow = ({ data, className, ...props }: TableRowProps): JSX.Elem
 			>
 				{data.supply}
 			</TableData>
+			<td>
+				<Sparkline data={sparklineData} width={140} height={63} color={parseFloat(data.changePercent24Hr) < 0 ? 'red' : 'green'} />
+			</td>
 			{/* <td>{data.maxSupply && <Strip strip={{ max: parseFloat(data.maxSupply), fill: parseFloat(data.supply) }} />}</td> */}
 			{/* <td>{data.maxSupply && <Tooltip tooltip={{ strip: { max: parseFloat(data.maxSupply), fill: parseFloat(data.supply) }, symbol: data.symbol }} />}</td> */}
 			{/* <td>{data.priceUsd && <Tooltip tooltip={{ priceUsd: data.priceUsd, volumeUsd24Hr: data.volumeUsd24Hr, date: '04/03/2023', time: '3:15:00 AM' }} />}</td> */}
