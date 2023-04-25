@@ -65,7 +65,8 @@ export const TableData = ({ horizontalAlign, image, imageAlt, mainTextWeight = '
 			className={cn(className, styles.td, {
 				[styles.alignStart]: horizontalAlign === 'start',
 				[styles.alignEnd]: horizontalAlign === 'end',
-				[styles.twoLines]: greyTextPosition === 'bottom'
+				[styles.twoLines]: strip,
+				[styles.percent]: arrowType === 'top' || arrowType === 'bottom'
 			})}
 			{...props}
 		>

@@ -5,13 +5,14 @@
 	vertical-align: middle;
 }
 
-.twoLines {
-	padding-top: 19px;
+.twoLines,
+.percent {
+	display: flex;
+	align-items: center;
 }
 
 .td .strip {
-	position: absolute;
-	right: 0;
+	align-self: flex-end;
 }
 
 .medium {
@@ -20,6 +21,11 @@
 
 .semi {
 	font-weight: 600;
+}
+
+.arrow {
+	margin-right: 3px;
+	margin-top: 3px;
 }
 
 .arrowTop {

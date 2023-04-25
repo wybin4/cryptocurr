@@ -3,6 +3,9 @@ import { TableRow } from '../../atomic/TableRow/TableRow';
 import { RateTableProps } from './RateTable.props';
 import axios from 'axios';
 import { RowModel } from '../../atomic/TableRow/TableRow.props';
+import { TableHead } from '../../atomic/TableHead/TableHead';
+import cn from 'classnames';
+import styles from './RateTable.module.css';
 
 export const RateTable = ({ className, ...props }: RateTableProps): JSX.Element => {
 
@@ -47,18 +50,18 @@ export const RateTable = ({ className, ...props }: RateTableProps): JSX.Element 
 	}, []);
 	return (
 		<table
-			className={className}
+			className={cn(className, styles.table)}
 			{...props}
 		>
 			<thead>
 				<tr>
-					<th>Номер</th>
-					<th>Название</th>
-					<th>Цена</th>
-					<th>24ч %</th>
-					<th>Рыночная капитализация</th>
-					<th>Объём</th>
-					<th>Циркулирующее предложение</th>
+					<TableHead horizontalAlign={'start'}>Номер</TableHead>
+					<TableHead horizontalAlign={'start'}>Название</TableHead>
+					<TableHead horizontalAlign={'end'}>Цена</TableHead>
+					<TableHead horizontalAlign={'end'}>24ч %</TableHead>
+					<TableHead horizontalAlign={'end'}>Рыночная капитализация</TableHead>
+					<TableHead horizontalAlign={'end'}>Объём</TableHead>
+					<TableHead horizontalAlign={'end'}>Циркулирующее предложение</TableHead>
 					<th>Последние 7 дней</th>
 				</tr>
 			</thead>

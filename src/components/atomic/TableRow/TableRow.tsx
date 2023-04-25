@@ -17,7 +17,7 @@ export const TableRow = ({ data, className, ...props }: TableRowProps): JSX.Elem
 			<td>{<img src={`https://assets.coincap.io/assets/icons/${data.symbol.toLowerCase()}@2x.png`} alt={data.id} />}{data.name}</td>
 			<td>{convertAndFix(data.priceUsd, '$', 'before')}</td>
 			<td>{convertAndFix(data.changePercent24Hr)}</td>*/}
-			<TableData fixed={0}>{data.rank}</TableData>
+			<TableData fixed={0} horizontalAlign='start'>{data.rank}</TableData>
 			<TableData
 				fixed={0}
 				mainTextWeight='semi'
