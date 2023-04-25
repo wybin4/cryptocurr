@@ -33,7 +33,7 @@ export const Sparkline = ({ data, height, width, color, className, ...props }: S
 			.join('path')
 			.attr('fill', 'none')
 			.attr('stroke', color === 'red' ? 'var(--red)' : 'var(--green)')
-			.attr('stroke-width', 1.5)
+			.attr('stroke-width', 2)
 			.attr('d', line);
 	}, [data, height, width, color]);
 
