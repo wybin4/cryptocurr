@@ -39,7 +39,7 @@ export const TooltipProvider = ({ children }: IProps): JSX.Element => {
 					initial={{ opacity: 0, y: -10 }}
 					animate={{ opacity: 1, y: 0 }}
 					exit={{ opacity: 0, y: -10 }}
-					transition={{ duration: 0.3 }}
+					transition={{ duration: 0.2 }}
 				>
 					<Tooltip tooltip={tooltip} x={position.x} y={position.y} />
 				</motion.div>
@@ -52,7 +52,10 @@ export const TooltipProvider = ({ children }: IProps): JSX.Element => {
 export const Tooltip = ({ x, y, tooltip, className, ...props }: TooltipProps): JSX.Element => {
 	return (
 		<div
-			className={cn(className, styles.tooltip)}
+			className={cn(className, {
+				[styles.tooltip]: tooltip.text === undefined,
+				[styles.infoTooltip]: tooltip.text !== undefined
+			})}
 			style={{ top: y, left: x }}
 			{...props}
 		>
@@ -84,6 +87,9 @@ export const Tooltip = ({ x, y, tooltip, className, ...props }: TooltipProps): J
 					minimumFractionDigits: 0,
 					maximumFractionDigits: 0
 				})}</div>
+			</>}
+			{tooltip.text && <>
+				<div className={styles.infoText}>{tooltip.text}</div>
 			</>}
 		</div>
 	);

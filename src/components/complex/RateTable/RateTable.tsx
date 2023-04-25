@@ -23,6 +23,9 @@ export const RateTable = ({ className, ...props }: RateTableProps): JSX.Element 
 		return () => clearInterval(timerId); // <-- return cleanup function
 	}, []);
 */
+	const whatIsCap = `Общая рыночная стоимость циркулирующего предложения криптовалюты. Это аналог капитализации в свободном обращении на фондовом рынке. Рыночная капитализация = текущая цена х циркулирующее предложение.`;
+	const whatIsVolume = `Количество проданной криптовалюты за последние 24 часа`;
+	const whatIsSupply = `Количество монет, которое циркулирует на рынке и находится в публичном обращении. Это аналог текущих акций на фондовом рынке.`;
 	const [data, setData] = useState<RowModel[]>();
 
 
@@ -59,9 +62,9 @@ export const RateTable = ({ className, ...props }: RateTableProps): JSX.Element 
 					<TableHead horizontalAlign={'start'}>Название</TableHead>
 					<TableHead horizontalAlign={'end'}>Цена</TableHead>
 					<TableHead horizontalAlign={'end'}>24ч %</TableHead>
-					<TableHead horizontalAlign={'end'}>Рыночная капитализация</TableHead>
-					<TableHead horizontalAlign={'end'}>Объём</TableHead>
-					<TableHead horizontalAlign={'end'}>Циркулирующее предложение</TableHead>
+					<TableHead horizontalAlign={'end'} tooltipText={whatIsCap}>Рыночная капитализация</TableHead>
+					<TableHead horizontalAlign={'end'} tooltipText={whatIsVolume}>Объём</TableHead>
+					<TableHead horizontalAlign={'end'} tooltipText={whatIsSupply}>Циркулирующее предложение</TableHead>
 					<th>Последние 7 дней</th>
 				</tr>
 			</thead>

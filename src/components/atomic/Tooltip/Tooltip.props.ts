@@ -14,7 +14,11 @@ export interface graphTooltip {
 	volumeUsd24Hr: string;
 }
 
-export type TooltipModel = XOR<graphTooltip, percentTooltip>;
+export interface infoTooltip {
+	text: string;
+}
+
+export type TooltipModel = XOR<infoTooltip, XOR<graphTooltip, percentTooltip>>;
 
 export interface TooltipProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
 	tooltip: TooltipModel;

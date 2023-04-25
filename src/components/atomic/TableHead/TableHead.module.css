@@ -5,3 +5,8 @@
 .thEnd {
 	text-align: end;
 }
+
+.infoTip {
+	margin-left: 5px;
+	vertical-align: middle;
+}
