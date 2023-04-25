@@ -6,6 +6,7 @@ import cn from 'classnames';
 import { Sparkline } from '../Sparkline/Sparkline';
 import axios from 'axios';
 import { SparklineDataModel } from '../Sparkline/Sparkline.props';
+import { cacheAdapterEnhancer } from 'axios-extensions';
 
 // import { Strip } from '../Strip/Strip';
 // import { Tooltip } from '../Tooltip/Tooltip';
@@ -24,19 +25,6 @@ export const TableRow = ({ data, className, ...props }: TableRowProps): JSX.Elem
 	};
 
 	const [sparklineData, setSparklineData] = useState<SparklineDataModel[]>([]);
-
-	useEffect(() => {
-		const fetchData = async () => {
-			const sparklData = await getSparklineData(data.id);
-			if (sparklData) {
-				setSparklineData(sparklData);
-			}
-			else {
-				throw Error('Невозможно получить данные для графиков');
-			}
-		};
-		fetchData();
-	}, [data.id]);
 
 	return (
 		<tr
