@@ -6,35 +6,34 @@ import cn from 'classnames';
 import { Sparkline } from '../Sparkline/Sparkline';
 import axios from 'axios';
 import { SparklineDataModel } from '../Sparkline/Sparkline.props';
+import { UseQueryResult, useQuery } from 'react-query';
 
 export const TableRow = ({ data, className, ...props }: TableRowProps): JSX.Element => {
 
-	const getSparklineData = async (name: string): Promise<SparklineDataModel[]> => {
-		try {
-			const now = Date.now();
-			const oneWeekAgo = now - 7 * 24 * 60 * 60 * 1000;
-			const response = await axios.get(`https://api.coincap.io/v2/assets/${name}/history?interval=h1&start=${oneWeekAgo}&end=${now}`);
-			return response.data.data;
-		} catch (ex) {
-			console.error(ex);
-			return [];
-		}
+	const fetchData = async (name: string) => {
+		const now = Date.now();
+		const oneWeekAgo = now - 7 * 24 * 60 * 60 * 1000;
+		const response = await axios.get(`https://api.coincap.io/v2/assets/${name}/history?interval=h1&start=${oneWeekAgo}&end=${now}`);
+		return response.data.data;
+	};
+
+	const UseSparklineData = (name: string): UseQueryResult<SparklineDataModel[], unknown> => {
+		return useQuery<SparklineDataModel[], unknown>(['sparklineData', name], () => fetchData(name), {
+			refetchOnWindowFocus: false,
+			staleTime: 5 * 60 * 1000,
+		});
 	};
 
 	const [sparklineData, setSparklineData] = useState<SparklineDataModel[]>([]);
 
+	const sparklData = UseSparklineData(data.id);
 	useEffect(() => {
-		const fetchData = async () => {
-			const sparklData = await getSparklineData(data.id);
-			if (sparklData) {
-				setSparklineData(sparklData);
-			}
-			else {
-				throw Error('Невозможно получить данные для графиков');
-			}
-		};
-		fetchData();
-	}, [data.id]);
+		if (sparklData.data) {
+			setSparklineData(sparklData.data);
+		} else if (sparklData.isError) {
+			throw Error('Невозможно получить данные для графиков');
+		}
+	}, [sparklData]);
 
 	return (
 		<tr
