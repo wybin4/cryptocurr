@@ -5,8 +5,7 @@
 	vertical-align: middle;
 }
 
-.twoLines,
-.percent {
+.twoLines {
 	display: flex;
 	align-items: center;
 }
