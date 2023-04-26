@@ -45,6 +45,7 @@ export const RateTable = ({ className, ...props }: RateTableProps): JSX.Element 
 
 	useEffect(() => {
 		getData(offset === 0 ? offset : offset + limit, limit, []);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 
