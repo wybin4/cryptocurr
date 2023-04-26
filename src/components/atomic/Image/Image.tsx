@@ -5,7 +5,7 @@ import styles from './Image.module.css';
 
 export const Image = ({ type, src, alt, className, ...props }: ImageProps): JSX.Element => {
 	return (
-		<img className={cn(className, {
+		<img loading='lazy' className={cn(className, {
 			[styles.tableImg]: type === 'table',
 			[styles.pageImg]: type === 'page'
 		})} {...props} src={src} alt={alt} />
