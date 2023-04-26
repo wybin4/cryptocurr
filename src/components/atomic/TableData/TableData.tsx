@@ -65,7 +65,7 @@ export const TableData = ({ horizontalAlign, image, imageAlt, mainTextWeight = '
 			className={cn(className, styles.td, {
 				[styles.alignStart]: horizontalAlign === 'start',
 				[styles.alignEnd]: horizontalAlign === 'end',
-				[styles.twoLines]: strip,
+				[styles.twoLines]: strip?.max,
 				[styles.percent]: arrowType === 'top' || arrowType === 'bottom'
 			})}
 			{...props}
@@ -91,8 +91,6 @@ export const TableData = ({ horizontalAlign, image, imageAlt, mainTextWeight = '
 						onMouseLeave={onMouseLeave}
 					/>}
 			</span>
-			{/* {greyTextPosition === 'bottom' && greyText && <div className={styles.greyTextBottom}>{getGreyText(greyTextFontSize, greyText, greyTextPosition)}</div>}
-			{greyTextPosition === 'right' && greyText && <span>{getGreyText(greyTextFontSize, greyText, greyTextPosition)}</span>} */}
 			<span className={cn({
 				[styles.bottomGreyText]: greyTextPosition === 'bottom'
 			})}>
