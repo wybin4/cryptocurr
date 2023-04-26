@@ -1,5 +1,7 @@
 .table {
 	border-collapse: collapse;
+
+	margin: 0 auto;
 }
 
 .table tr:hover:not(thead>tr) {

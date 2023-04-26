@@ -9,6 +9,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <div className="App">
+        <p className='cryptoText'>Топ криптовалюты по рыночной капитализации</p>
         <TooltipProvider>
           <RateTable />
         </TooltipProvider>

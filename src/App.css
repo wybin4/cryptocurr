@@ -32,7 +32,15 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
+}
+
+.cryptoText {
+  font-size: 24px;
+  font-weight: 700;
+
+  margin: 40px 0;
 }
