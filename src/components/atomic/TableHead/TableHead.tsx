@@ -5,11 +5,11 @@ import { useState } from 'react';
 import { Tooltip } from '../Tooltip/Tooltip';
 import { ReactComponent as InfoIcon } from './info.svg';
 import { motion } from 'framer-motion';
-import { ReactComponent as ArrowIcon } from './arrow.svg';
 import { SortEnum } from '../../complex/RateTable/RateTable.props';
+import { ReactComponent as ArrowIcon } from './arrow.svg';
 
 
-export const TableHead = ({ sortDirection, tooltipText = undefined, horizontalAlign = 'start', children, className, ...props }: TableHeadProps): JSX.Element => {
+export const TableHead = ({ sortField, sortDirection = SortEnum.None, tooltipText = undefined, horizontalAlign = 'start', children, className, ...props }: TableHeadProps): JSX.Element => {
 	const [showTooltip, setShowTooltip] = useState(false);
 	const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
 
@@ -24,6 +24,7 @@ export const TableHead = ({ sortDirection, tooltipText = undefined, horizontalAl
 	const handleMouseLeave = () => {
 		setShowTooltip(false);
 	};
+
 	return (
 		<th
 			className={cn(className, styles.th, {
@@ -33,6 +34,10 @@ export const TableHead = ({ sortDirection, tooltipText = undefined, horizontalAl
 			role="columnheader"
 			{...props}
 		>
+			{horizontalAlign === 'end' && (<>
+				{sortField && sortDirection !== SortEnum.Ascending && (<ArrowIcon className={cn(styles.arrowUp, styles.arrowEnd)} />)}
+				{sortField && sortDirection !== SortEnum.Descending && (<ArrowIcon className={cn(styles.arrowDown, styles.arrowEnd)} />)}
+			</>)}
 			{children}
 			{tooltipText &&
 				<InfoIcon
@@ -51,7 +56,10 @@ export const TableHead = ({ sortDirection, tooltipText = undefined, horizontalAl
 					<Tooltip x={tooltipPosition.x} y={tooltipPosition.y} tooltip={{ text: tooltipText }} />
 				</motion.div>
 			)}
-			{sortDirection !== SortEnum.None && sortDirection !== undefined && (<ArrowIcon />)}
+			{horizontalAlign === 'start' && (<>
+				{sortField && sortDirection !== SortEnum.Ascending && (<ArrowIcon className={cn(styles.arrowUp, styles.arrowStart)} />)}
+				{sortField && sortDirection !== SortEnum.Descending && (<ArrowIcon className={cn(styles.arrowDown, styles.arrowStart)} />)}
+			</>)}
 		</th>
 	);
 };

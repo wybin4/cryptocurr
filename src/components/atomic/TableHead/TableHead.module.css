@@ -10,3 +10,15 @@
 	margin-left: 5px;
 	vertical-align: middle;
 }
+
+.arrowDown {
+	transform: rotate(180deg);
+}
+
+.arrowStart {
+	margin-left: 5px;
+}
+
+.arrowEnd {
+	margin-right: 5px;
+}

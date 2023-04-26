@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import { TableRow } from '../../atomic/TableRow/TableRow';
 import { RateTableProps, SortEnum } from './RateTable.props';
 import axios from 'axios';
@@ -6,6 +6,7 @@ import { TableHead } from '../../atomic/TableHead/TableHead';
 import cn from 'classnames';
 import styles from './RateTable.module.css';
 import { sortInitialState, sortReducer } from './sort.reducer';
+import { RowModel } from '../../atomic/TableRow/TableRow.props';
 
 export const RateTable = ({ className, ...props }: RateTableProps): JSX.Element => {
 	const whatIsCap = `Общая рыночная стоимость циркулирующего предложения криптовалюты. Это аналог капитализации в свободном обращении на фондовом рынке. Рыночная капитализация = текущая цена х циркулирующее предложение.`;
@@ -13,6 +14,7 @@ export const RateTable = ({ className, ...props }: RateTableProps): JSX.Element 
 	const whatIsSupply = `Количество монет, которое циркулирует на рынке и находится в публичном обращении. Это аналог текущих акций на фондовом рынке.`;
 	//const [data, setData] = useState<RowModel[]>();
 	const [state, dispatch] = useReducer(sortReducer, sortInitialState);
+	const [sortField, setSortField] = useState<keyof RowModel | undefined>(undefined);
 
 	const getData = async () => {
 		let response = null;
@@ -40,7 +42,14 @@ export const RateTable = ({ className, ...props }: RateTableProps): JSX.Element 
 	function getOppositeSort(sort: SortEnum): SortEnum {
 		return sort === SortEnum.Ascending ? SortEnum.Descending : SortEnum.Ascending;
 	}
-
+	const handleSortChange = (fieldName: keyof RowModel) => {
+		if (fieldName === sortField) {
+			dispatch({ type: getOppositeSort(state.sortDirection), field: fieldName });
+		} else {
+			setSortField(fieldName);
+			dispatch({ type: SortEnum.Ascending, field: fieldName });
+		}
+	};
 	return (
 		<table
 			className={cn(className, styles.table)}
@@ -49,46 +58,59 @@ export const RateTable = ({ className, ...props }: RateTableProps): JSX.Element 
 			<thead>
 				<tr>
 					<TableHead horizontalAlign={'start'}
+						sortField={sortField === 'rank' ? 'rank' : undefined}
 						sortDirection={state.sortDirection}
-						onClick={() => dispatch({ type: getOppositeSort(state.sortDirection), field: 'rank' })}
+						onClick={() => handleSortChange('rank')}
 					>
 						Номер
 					</TableHead>
 					<TableHead horizontalAlign={'start'}
-						onClick={() => dispatch({ type: getOppositeSort(state.sortDirection), field: 'name' })}
+						sortField={sortField === 'name' ? 'name' : undefined}
+						sortDirection={state.sortDirection}
+						onClick={() => handleSortChange('name')}
 					>
 						Название
 					</TableHead>
 					<TableHead
 						horizontalAlign={'end'}
-						onClick={() => dispatch({ type: getOppositeSort(state.sortDirection), field: 'priceUsd' })}
+						sortField={sortField === 'priceUsd' ? 'priceUsd' : undefined}
+						sortDirection={state.sortDirection}
+						onClick={() => handleSortChange('priceUsd')}
 					>
 						Цена
 					</TableHead>
 					<TableHead
 						horizontalAlign={'end'}
-						onClick={() => dispatch({ type: getOppositeSort(state.sortDirection), field: 'changePercent24Hr' })}
+						sortField={sortField === 'changePercent24Hr' ? 'changePercent24Hr' : undefined}
+						sortDirection={state.sortDirection}
+						onClick={() => handleSortChange('changePercent24Hr')}
 					>
 						24ч %
 					</TableHead>
 					<TableHead
 						horizontalAlign={'end'}
 						tooltipText={whatIsCap}
-						onClick={() => dispatch({ type: getOppositeSort(state.sortDirection), field: 'marketCapUsd' })}
+						sortField={sortField === 'marketCapUsd' ? 'marketCapUsd' : undefined}
+						sortDirection={state.sortDirection}
+						onClick={() => handleSortChange('marketCapUsd')}
 					>
 						Рыночная капитализация
 					</TableHead>
 					<TableHead
 						horizontalAlign={'end'}
 						tooltipText={whatIsVolume}
-						onClick={() => dispatch({ type: getOppositeSort(state.sortDirection), field: 'volumeUsd24Hr' })}
+						sortField={sortField === 'volumeUsd24Hr' ? 'volumeUsd24Hr' : undefined}
+						sortDirection={state.sortDirection}
+						onClick={() => handleSortChange('volumeUsd24Hr')}
 					>
 						Объём
 					</TableHead>
 					<TableHead
 						horizontalAlign={'end'}
 						tooltipText={whatIsSupply}
-						onClick={() => dispatch({ type: getOppositeSort(state.sortDirection), field: 'supply' })}
+						sortField={sortField === 'supply' ? 'supply' : undefined}
+						sortDirection={state.sortDirection}
+						onClick={() => handleSortChange('supply')}
 					>
 						Циркулирующее предложение
 					</TableHead>
