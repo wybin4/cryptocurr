@@ -1,3 +1,7 @@
+.th {
+	cursor: pointer;
+}
+
 .thStart {
 	text-align: start;
 }
