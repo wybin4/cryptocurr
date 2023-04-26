@@ -16,21 +16,33 @@ export const RateTable = ({ className, ...props }: RateTableProps): JSX.Element 
 	const [state, dispatch] = useReducer(sortReducer, sortInitialState);
 	const [sortField, setSortField] = useState<keyof RowModel | undefined>(undefined);
 
-	const getData = async () => {
+	const [offset, setOffset] = useState(0);
+	const limit = 20;
+
+	const handleLoadMore = () => {
+		// увеличиваем offset на значение limit, которое должно быть постоянным
+		setOffset(prevOffset => prevOffset + limit);
+	};
+
+	const getData = async (offset: number, limit: number) => {
 		try {
-			const response = await axios.get(`https://api.coincap.io/v2/assets`);
+			const response = await axios.get(`https://api.coincap.io/v2/assets?offset=${offset}&limit=${limit}`);
 			const json = response.data;
-			console.log(json.data)
+			console.log(json.data);
 			dispatch({ type: 'SET_DATA', payload: json.data });
 		} catch (ex) {
 			console.log(ex);
 		}
 	};
 
-
+	// вызываем функцию загрузки данных с текущим значением offset
 	useEffect(() => {
-		getData();
-	}, []);
+		getData(offset, limit);
+	}, [offset]);
+
+	// useEffect(() => {
+	// 	getData(offset + limit, limit);
+	// }, []);
 
 	function getOppositeSort(sort: SortEnum): SortEnum {
 		return sort === SortEnum.Ascending ? SortEnum.Descending : SortEnum.Ascending;
@@ -114,6 +126,13 @@ export const RateTable = ({ className, ...props }: RateTableProps): JSX.Element 
 				<tbody>
 					{state.data && state.data.map(d => <TableRow data={d} />)}
 				</tbody>
+				<tfoot>
+					<tr>
+						<td colSpan={8}>
+							<button onClick={handleLoadMore}>Загрузить еще</button>
+						</td>
+					</tr>
+				</tfoot>
 			</table >
 		</>
 	);
