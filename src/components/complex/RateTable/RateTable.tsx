@@ -40,6 +40,7 @@ export const RateTable = ({ className, ...props }: RateTableProps): JSX.Element 
 	function getOppositeSort(sort: SortEnum): SortEnum {
 		return sort === SortEnum.Ascending ? SortEnum.Descending : SortEnum.Ascending;
 	}
+
 	return (
 		<table
 			className={cn(className, styles.table)}
@@ -48,6 +49,7 @@ export const RateTable = ({ className, ...props }: RateTableProps): JSX.Element 
 			<thead>
 				<tr>
 					<TableHead horizontalAlign={'start'}
+						sortDirection={state.sortDirection}
 						onClick={() => dispatch({ type: getOppositeSort(state.sortDirection), field: 'rank' })}
 					>
 						Номер
@@ -68,6 +70,6 @@ export const RateTable = ({ className, ...props }: RateTableProps): JSX.Element 
 			<tbody>
 				{state.data && state.data.map(d => <TableRow data={d} />)}
 			</tbody>
-		</table>
+		</table >
 	);
 };

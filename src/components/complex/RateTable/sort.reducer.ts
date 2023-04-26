@@ -1,17 +1,18 @@
 import { RowModel } from '../../atomic/TableRow/TableRow.props';
 import { SortEnum } from './RateTable.props';
 
-export type SortActions = { type: SortEnum.Ascending; field: keyof RowModel } | { type: SortEnum.Descending; field: keyof RowModel };
+export type SortActions = { type: SortEnum.Ascending; field: keyof RowModel } | { type: SortEnum.Descending; field: keyof RowModel } | { type: SortEnum.None };
 
 export interface SetDataAction {
 	type: 'SET_DATA';
 	payload: RowModel[];
 }
 
+
 export const sortInitialState = {
 	data: [] as RowModel[],
 	sortField: '',
-	sortDirection: SortEnum.Ascending,
+	sortDirection: SortEnum.None,
 };
 
 export function sortReducer(state: typeof sortInitialState, action: SortActions | SetDataAction) {
@@ -46,6 +47,8 @@ export function sortReducer(state: typeof sortInitialState, action: SortActions 
 				sortField: action.field,
 				sortDirection: SortEnum.Descending,
 			};
+		case SortEnum.None:
+			return state;
 		case 'SET_DATA':
 			return {
 				...state,

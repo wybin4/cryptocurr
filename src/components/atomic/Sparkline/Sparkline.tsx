@@ -1,6 +1,4 @@
 import { SparklineDataModel, SparklineProps } from './Sparkline.props';
-import cn from 'classnames';
-import styles from './Sparkline.module.css';
 import { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 

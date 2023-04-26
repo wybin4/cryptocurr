@@ -5,9 +5,11 @@ import { useState } from 'react';
 import { Tooltip } from '../Tooltip/Tooltip';
 import { ReactComponent as InfoIcon } from './info.svg';
 import { motion } from 'framer-motion';
+import { ReactComponent as ArrowIcon } from './arrow.svg';
+import { SortEnum } from '../../complex/RateTable/RateTable.props';
 
 
-export const TableHead = ({ tooltipText = undefined, horizontalAlign = 'start', children, className, ...props }: TableHeadProps): JSX.Element => {
+export const TableHead = ({ sortDirection, tooltipText = undefined, horizontalAlign = 'start', children, className, ...props }: TableHeadProps): JSX.Element => {
 	const [showTooltip, setShowTooltip] = useState(false);
 	const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
 
@@ -22,7 +24,7 @@ export const TableHead = ({ tooltipText = undefined, horizontalAlign = 'start', 
 	const handleMouseLeave = () => {
 		setShowTooltip(false);
 	};
-
+	console.log(sortDirection)
 	return (
 		<th
 			className={cn(className, styles.th, {
@@ -50,6 +52,7 @@ export const TableHead = ({ tooltipText = undefined, horizontalAlign = 'start', 
 					<Tooltip x={tooltipPosition.x} y={tooltipPosition.y} tooltip={{ text: tooltipText }} />
 				</motion.div>
 			)}
+			{sortDirection !== SortEnum.None && sortDirection !== undefined && (<ArrowIcon />)}
 		</th>
 	);
 };
