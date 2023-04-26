@@ -17,23 +17,16 @@ export const RateTable = ({ className, ...props }: RateTableProps): JSX.Element 
 	const [sortField, setSortField] = useState<keyof RowModel | undefined>(undefined);
 
 	const getData = async () => {
-		let response = null;
-		new Promise(async (resolve, reject) => {
-			try {
-				response = await axios.get('https://api.coincap.io/v2/assets');
-			} catch (ex) {
-				response = null;
-				console.log(ex);
-				reject(ex);
-			}
-			if (response) {
-				const json = response.data;
-				console.log(json.data)
-				dispatch({ type: 'SET_DATA', payload: json.data });
-				resolve(json);
-			}
-		});
+		try {
+			const response = await axios.get(`https://api.coincap.io/v2/assets`);
+			const json = response.data;
+			console.log(json.data)
+			dispatch({ type: 'SET_DATA', payload: json.data });
+		} catch (ex) {
+			console.log(ex);
+		}
 	};
+
 
 	useEffect(() => {
 		getData();
@@ -51,75 +44,77 @@ export const RateTable = ({ className, ...props }: RateTableProps): JSX.Element 
 		}
 	};
 	return (
-		<table
-			className={cn(className, styles.table)}
-			{...props}
-		>
-			<thead>
-				<tr>
-					<TableHead horizontalAlign={'start'}
-						sortField={sortField === 'rank' ? 'rank' : undefined}
-						sortDirection={state.sortDirection}
-						onClick={() => handleSortChange('rank')}
-					>
-						Номер
-					</TableHead>
-					<TableHead horizontalAlign={'start'}
-						sortField={sortField === 'name' ? 'name' : undefined}
-						sortDirection={state.sortDirection}
-						onClick={() => handleSortChange('name')}
-					>
-						Название
-					</TableHead>
-					<TableHead
-						horizontalAlign={'end'}
-						sortField={sortField === 'priceUsd' ? 'priceUsd' : undefined}
-						sortDirection={state.sortDirection}
-						onClick={() => handleSortChange('priceUsd')}
-					>
-						Цена
-					</TableHead>
-					<TableHead
-						horizontalAlign={'end'}
-						sortField={sortField === 'changePercent24Hr' ? 'changePercent24Hr' : undefined}
-						sortDirection={state.sortDirection}
-						onClick={() => handleSortChange('changePercent24Hr')}
-					>
-						24ч %
-					</TableHead>
-					<TableHead
-						horizontalAlign={'end'}
-						tooltipText={whatIsCap}
-						sortField={sortField === 'marketCapUsd' ? 'marketCapUsd' : undefined}
-						sortDirection={state.sortDirection}
-						onClick={() => handleSortChange('marketCapUsd')}
-					>
-						Рыночная капитализация
-					</TableHead>
-					<TableHead
-						horizontalAlign={'end'}
-						tooltipText={whatIsVolume}
-						sortField={sortField === 'volumeUsd24Hr' ? 'volumeUsd24Hr' : undefined}
-						sortDirection={state.sortDirection}
-						onClick={() => handleSortChange('volumeUsd24Hr')}
-					>
-						Объём
-					</TableHead>
-					<TableHead
-						horizontalAlign={'end'}
-						tooltipText={whatIsSupply}
-						sortField={sortField === 'supply' ? 'supply' : undefined}
-						sortDirection={state.sortDirection}
-						onClick={() => handleSortChange('supply')}
-					>
-						Циркулирующее предложение
-					</TableHead>
-					<th>Последние 7 дней</th>
-				</tr>
-			</thead>
-			<tbody>
-				{state.data && state.data.map(d => <TableRow data={d} />)}
-			</tbody>
-		</table >
+		<>
+			<table
+				className={cn(className, styles.table)}
+				{...props}
+			>
+				<thead>
+					<tr>
+						<TableHead horizontalAlign={'start'}
+							sortField={sortField === 'rank' ? 'rank' : undefined}
+							sortDirection={state.sortDirection}
+							onClick={() => handleSortChange('rank')}
+						>
+							Номер
+						</TableHead>
+						<TableHead horizontalAlign={'start'}
+							sortField={sortField === 'name' ? 'name' : undefined}
+							sortDirection={state.sortDirection}
+							onClick={() => handleSortChange('name')}
+						>
+							Название
+						</TableHead>
+						<TableHead
+							horizontalAlign={'end'}
+							sortField={sortField === 'priceUsd' ? 'priceUsd' : undefined}
+							sortDirection={state.sortDirection}
+							onClick={() => handleSortChange('priceUsd')}
+						>
+							Цена
+						</TableHead>
+						<TableHead
+							horizontalAlign={'end'}
+							sortField={sortField === 'changePercent24Hr' ? 'changePercent24Hr' : undefined}
+							sortDirection={state.sortDirection}
+							onClick={() => handleSortChange('changePercent24Hr')}
+						>
+							24ч %
+						</TableHead>
+						<TableHead
+							horizontalAlign={'end'}
+							tooltipText={whatIsCap}
+							sortField={sortField === 'marketCapUsd' ? 'marketCapUsd' : undefined}
+							sortDirection={state.sortDirection}
+							onClick={() => handleSortChange('marketCapUsd')}
+						>
+							Рыночная капитализация
+						</TableHead>
+						<TableHead
+							horizontalAlign={'end'}
+							tooltipText={whatIsVolume}
+							sortField={sortField === 'volumeUsd24Hr' ? 'volumeUsd24Hr' : undefined}
+							sortDirection={state.sortDirection}
+							onClick={() => handleSortChange('volumeUsd24Hr')}
+						>
+							Объём
+						</TableHead>
+						<TableHead
+							horizontalAlign={'end'}
+							tooltipText={whatIsSupply}
+							sortField={sortField === 'supply' ? 'supply' : undefined}
+							sortDirection={state.sortDirection}
+							onClick={() => handleSortChange('supply')}
+						>
+							Циркулирующее предложение
+						</TableHead>
+						<th>Последние 7 дней</th>
+					</tr>
+				</thead>
+				<tbody>
+					{state.data && state.data.map(d => <TableRow data={d} />)}
+				</tbody>
+			</table >
+		</>
 	);
 };
