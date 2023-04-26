@@ -1,0 +1,17 @@
+.button {
+	padding: 12px 24px;
+
+	border-radius: 11px;
+	border: none;
+
+	cursor: pointer;
+}
+
+.blue {
+	background-color: var(--blue);
+	color: var(--white);
+}
+
+.blue:hover {
+	background-color: var(--blue-hover);
+}

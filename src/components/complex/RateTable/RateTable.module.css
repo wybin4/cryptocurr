@@ -22,3 +22,8 @@ th,
 td {
 	padding: 0 20px;
 }
+
+.loadButton {
+	margin-top: 30px;
+	margin-bottom: 20px;
+}

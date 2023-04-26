@@ -7,6 +7,7 @@ import cn from 'classnames';
 import styles from './RateTable.module.css';
 import { sortInitialState, sortReducer } from './sort.reducer';
 import { RowModel } from '../../atomic/TableRow/TableRow.props';
+import { Button } from '../../atomic/Button/Button';
 
 export const RateTable = ({ className, ...props }: RateTableProps): JSX.Element => {
 	const whatIsCap = `Общая рыночная стоимость циркулирующего предложения криптовалюты. Это аналог капитализации в свободном обращении на фондовом рынке. Рыночная капитализация = текущая цена х циркулирующее предложение.`;
@@ -20,29 +21,33 @@ export const RateTable = ({ className, ...props }: RateTableProps): JSX.Element 
 	const limit = 20;
 
 	const handleLoadMore = () => {
-		// увеличиваем offset на значение limit, которое должно быть постоянным
-		setOffset(prevOffset => prevOffset + limit);
+		setOffset((prevOffset) => prevOffset + limit);
+		getData(offset + limit, limit, state.data);
 	};
 
-	const getData = async (offset: number, limit: number) => {
+	const getData = async (offset: number, limit: number, prevData: RowModel[]) => {
+		let response = null;
 		try {
-			const response = await axios.get(`https://api.coincap.io/v2/assets?offset=${offset}&limit=${limit}`);
-			const json = response.data;
-			console.log(json.data);
-			dispatch({ type: 'SET_DATA', payload: json.data });
+			response = await axios.get(
+				`https://api.coincap.io/v2/assets?offset=${offset}&limit=${limit}`
+			);
 		} catch (ex) {
+			response = null;
 			console.log(ex);
+		}
+		if (response) {
+			const json = response.data;
+			const newData = [...prevData, ...json.data];
+			console.log(newData);
+			dispatch({ type: "SET_DATA", payload: newData });
 		}
 	};
 
-	// вызываем функцию загрузки данных с текущим значением offset
 	useEffect(() => {
-		getData(offset, limit);
-	}, [offset]);
+		getData(offset === 0 ? offset : offset + limit, limit, []);
+	}, []);
 
-	// useEffect(() => {
-	// 	getData(offset + limit, limit);
-	// }, []);
+
 
 	function getOppositeSort(sort: SortEnum): SortEnum {
 		return sort === SortEnum.Ascending ? SortEnum.Descending : SortEnum.Ascending;
@@ -126,14 +131,8 @@ export const RateTable = ({ className, ...props }: RateTableProps): JSX.Element 
 				<tbody>
 					{state.data && state.data.map(d => <TableRow data={d} />)}
 				</tbody>
-				<tfoot>
-					<tr>
-						<td colSpan={8}>
-							<button onClick={handleLoadMore}>Загрузить еще</button>
-						</td>
-					</tr>
-				</tfoot>
 			</table >
+			<Button className={styles.loadButton} onClick={handleLoadMore} color='blue'>Загрузить еще</Button>
 		</>
 	);
 };
