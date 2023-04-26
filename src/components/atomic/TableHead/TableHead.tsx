@@ -24,7 +24,6 @@ export const TableHead = ({ sortDirection, tooltipText = undefined, horizontalAl
 	const handleMouseLeave = () => {
 		setShowTooltip(false);
 	};
-	console.log(sortDirection)
 	return (
 		<th
 			className={cn(className, styles.th, {

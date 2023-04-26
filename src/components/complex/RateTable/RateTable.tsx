@@ -59,11 +59,39 @@ export const RateTable = ({ className, ...props }: RateTableProps): JSX.Element 
 					>
 						Название
 					</TableHead>
-					<TableHead horizontalAlign={'end'}>Цена</TableHead>
-					<TableHead horizontalAlign={'end'}>24ч %</TableHead>
-					<TableHead horizontalAlign={'end'} tooltipText={whatIsCap}>Рыночная капитализация</TableHead>
-					<TableHead horizontalAlign={'end'} tooltipText={whatIsVolume}>Объём</TableHead>
-					<TableHead horizontalAlign={'end'} tooltipText={whatIsSupply}>Циркулирующее предложение</TableHead>
+					<TableHead
+						horizontalAlign={'end'}
+						onClick={() => dispatch({ type: getOppositeSort(state.sortDirection), field: 'priceUsd' })}
+					>
+						Цена
+					</TableHead>
+					<TableHead
+						horizontalAlign={'end'}
+						onClick={() => dispatch({ type: getOppositeSort(state.sortDirection), field: 'changePercent24Hr' })}
+					>
+						24ч %
+					</TableHead>
+					<TableHead
+						horizontalAlign={'end'}
+						tooltipText={whatIsCap}
+						onClick={() => dispatch({ type: getOppositeSort(state.sortDirection), field: 'marketCapUsd' })}
+					>
+						Рыночная капитализация
+					</TableHead>
+					<TableHead
+						horizontalAlign={'end'}
+						tooltipText={whatIsVolume}
+						onClick={() => dispatch({ type: getOppositeSort(state.sortDirection), field: 'volumeUsd24Hr' })}
+					>
+						Объём
+					</TableHead>
+					<TableHead
+						horizontalAlign={'end'}
+						tooltipText={whatIsSupply}
+						onClick={() => dispatch({ type: getOppositeSort(state.sortDirection), field: 'supply' })}
+					>
+						Циркулирующее предложение
+					</TableHead>
 					<th>Последние 7 дней</th>
 				</tr>
 			</thead>

@@ -21,13 +21,13 @@ export function sortReducer(state: typeof sortInitialState, action: SortActions 
 			return {
 				...state,
 				data: state.data.sort((a, b) => {
-					const aFieldValue = typeof a[action.field] === 'number' ? a[action.field] : String(a[action.field]);
-					const bFieldValue = typeof b[action.field] === 'number' ? b[action.field] : String(b[action.field]);
+					const aFieldValue = Number(a[action.field]) ? Number(a[action.field]) : String(a[action.field]);
+					const bFieldValue = Number(b[action.field]) ? Number(b[action.field]) : String(b[action.field]);
 					if (typeof aFieldValue === "number" && typeof bFieldValue === "number") {
 						return aFieldValue - bFieldValue;
-					} else {
+					} else if (typeof aFieldValue === "string" && typeof bFieldValue === "string") {
 						return aFieldValue && bFieldValue ? aFieldValue.localeCompare(bFieldValue) : 0;
-					}
+					} else return 0;
 				}),
 				sortField: action.field,
 				sortDirection: SortEnum.Ascending,
@@ -36,13 +36,13 @@ export function sortReducer(state: typeof sortInitialState, action: SortActions 
 			return {
 				...state,
 				data: state.data.sort((a, b) => {
-					const aFieldValue = typeof a[action.field] === 'number' ? a[action.field] : String(a[action.field]);
-					const bFieldValue = typeof b[action.field] === 'number' ? b[action.field] : String(b[action.field]);
+					const aFieldValue = Number(a[action.field]) ? Number(a[action.field]) : String(a[action.field]);
+					const bFieldValue = Number(b[action.field]) ? Number(b[action.field]) : String(b[action.field]);
 					if (typeof aFieldValue === "number" && typeof bFieldValue === "number") {
 						return bFieldValue - aFieldValue;
-					} else {
+					} else if (typeof aFieldValue === "string" && typeof bFieldValue === "string") {
 						return aFieldValue && bFieldValue ? bFieldValue.localeCompare(aFieldValue) : 0;
-					}
+					} else return 0;
 				}),
 				sortField: action.field,
 				sortDirection: SortEnum.Descending,
