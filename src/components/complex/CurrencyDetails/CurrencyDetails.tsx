@@ -206,17 +206,31 @@ export const CurrencyDetails = ({ className, ...props }: CurrencyDetailsProps): 
 								horizontalAlign='start'
 								tooltipText={whatIsVolume}
 							/>
-							<CurrencyPart
-								className={styles.statsPart}
-								propName='Циркулирующее предложение'
-								propValue={data.supply}
-								propSymbol={' ' + data.symbol}
-								horizontalAlign='end'
-								tooltipText={whatIsSupply}
-								propStrip={{ max: parseFloat(data.maxSupply), fill: parseFloat(data.supply) }}
-								additionalInfo={[{ addName: 'Максимальное предложение', addValue: data.maxSupply, addTooltipText: whatIsMaxSupply },
-								{ addName: 'Общее предложение', addValue: data.supply, addTooltipText: whatIsSupply }]}
-							/>
+							{data.maxSupply &&
+								<CurrencyPart
+									className={styles.statsPart}
+									propName='Циркулирующее предложение'
+									propValue={data.supply}
+									propSymbol={' ' + data.symbol}
+									horizontalAlign='end'
+									tooltipText={whatIsSupply}
+									propStrip={{ max: parseFloat(data.maxSupply), fill: parseFloat(data.supply) }}
+									additionalInfo={[{ addName: 'Максимальное предложение', addValue: data.maxSupply, addTooltipText: whatIsMaxSupply },
+									{ addName: 'Общее предложение', addValue: data.supply, addTooltipText: whatIsSupply }]}
+								/>
+							}
+							{!parseFloat(data.maxSupply) &&
+								<CurrencyPart
+									className={styles.statsPart}
+									propName='Циркулирующее предложение'
+									propValue={data.supply}
+									propSymbol={' ' + data.symbol}
+									horizontalAlign='end'
+									tooltipText={whatIsSupply}
+									additionalInfo={[{ addName: 'Максимальное предложение', addValue: '--', addTooltipText: whatIsMaxSupply },
+									{ addName: 'Общее предложение', addValue: data.supply, addTooltipText: whatIsSupply }]}
+								/>
+							}
 							{/* <CurrencyPart
 								className={styles.statsPart}
 								propName='Рыночная капитализация при полной эмиссии'

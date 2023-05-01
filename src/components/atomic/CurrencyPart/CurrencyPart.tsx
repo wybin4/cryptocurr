@@ -26,15 +26,33 @@ export const CurrencyPart = ({ horizontalAlign, propName, propValue, propSymbol,
 				{propPercent && <div className={styles.percent}>{propPercent}%</div>}
 				{propStrip && <Strip cursor='auto' strip={propStrip} className={styles.strip} />}
 			</div>
-			{additionalInfo && additionalInfo.map(info => <>
+			{additionalInfo &&
+				<div className={styles.addInfoDiv}>
+					{additionalInfo.map(info =>
+						<>
+							<div className={styles.addInfoName}>
+								{info.addName}
+								{info.addTooltipText && <InfoIcon tooltipText={info.addTooltipText} className={styles.addInfoTip} />}
+							</div>
+							<div className={styles.addInfoValue}>
+								{!isNaN(parseFloat(info.addValue)) && <>{info.addSymbol}{getCommas(min4Digits(parseFloat(info.addValue)))}</>}
+								{isNaN(parseFloat(info.addValue)) && <>--</>}
+							</div>
+						</>
+					)}
+				</div>
+			}
+
+			{/* {additionalInfo && additionalInfo.map(info => <>
 				<div className={styles.addInfoDiv}>
 					<div className={styles.name}>
 						{info.addName}
 						{info.addTooltipText && <InfoIcon tooltipText={info.addTooltipText} className={styles.addInfoTip} />}
 					</div>
-					<div className={styles.value}>{info.addSymbol}{getCommas(min4Digits(parseFloat(info.addValue)))}</div>
+					{!isNaN(parseFloat(info.addValue)) && <div className={styles.value}>{info.addSymbol}{getCommas(min4Digits(parseFloat(info.addValue)))}</div>}
+					{isNaN(parseFloat(info.addValue)) && <div className={styles.value}>--</div>}
 				</div>
-			</>)}
+			</>)} */}
 		</div>
 	);
 };
