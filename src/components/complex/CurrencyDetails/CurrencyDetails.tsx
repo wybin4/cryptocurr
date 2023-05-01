@@ -14,7 +14,6 @@ import { CurrencyPart } from '../../atomic/CurrencyPart/CurrencyPart';
 import { whatIsCap, whatIsFDMC, whatIsMaxSupply, whatIsSupply } from '../RateTable/RateTable';
 import { min4Digits } from '../../../helpers/convert';
 import { Strip } from '../../atomic/Strip/Strip';
-import { getFixedSymbols } from '../../../helpers/convert';
 
 export const CurrencyDetails = ({ className, ...props }: CurrencyDetailsProps): JSX.Element => {
 	const { name } = useParams<{ name: string }>();

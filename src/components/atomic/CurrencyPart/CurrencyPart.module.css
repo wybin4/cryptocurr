@@ -41,13 +41,15 @@
 }
 
 .addInfoDiv>.name {
-	display: flex;
+	display: grid;
+	grid-template-columns: auto 1fr;
+	align-items: center;
 }
 
 .addInfoTip {
 	margin-left: 5px;
 	margin-top: 2px;
-
+	text-align: end;
 	cursor: pointer;
 }
 
