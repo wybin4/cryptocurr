@@ -12,6 +12,16 @@
 	color: var(--white);
 }
 
+
 .blue:hover {
 	background-color: var(--blue-hover);
+}
+
+.grey {
+	background-color: var(--light-grey);
+	font-weight: 600;
+}
+
+.grey:hover {
+	background-color: var(--medium-grey);
 }

@@ -14,6 +14,7 @@ import { CurrencyPart } from '../../atomic/CurrencyPart/CurrencyPart';
 import { whatIsCap, whatIsFDMC, whatIsMaxSupply, whatIsSupply, whatIsVolume } from '../RateTable/RateTable';
 import { min4Digits } from '../../../helpers/convert';
 import { Strip } from '../../atomic/Strip/Strip';
+import { Button } from '../../atomic/Button/Button';
 
 export const CurrencyDetails = ({ className, ...props }: CurrencyDetailsProps): JSX.Element => {
 	const { name } = useParams<{ name: string }>();
@@ -114,12 +115,12 @@ export const CurrencyDetails = ({ className, ...props }: CurrencyDetailsProps): 
 					className={cn(className, styles.currencyDetails)}
 					{...props}
 				>
+					<div className={styles.leftNav}>
+						<a className={styles.backLink} href='/' rel="noreferrer">Криптовалюты</a>
+						<ArrowLeftIcon className={styles.arrowBack} />
+						<div>{data.name}</div>
+					</div>
 					<div className={styles.leftPart}>
-						<div className={styles.leftNav}>
-							<a className={styles.backLink} href='/' rel="noreferrer">Криптовалюты</a>
-							<ArrowLeftIcon className={styles.arrowBack} />
-							<div>{data.name}</div>
-						</div>
 						<div className={styles.leftHeader}>
 							<Image
 								className={styles.image}
@@ -143,45 +144,50 @@ export const CurrencyDetails = ({ className, ...props }: CurrencyDetailsProps): 
 							</Tag>
 						</div>
 					</div>
-					<div className={styles.rightPart}>
-						<div className={styles.rightHeader}>
-							<div className={styles.rightName}>Цена {data.name} ({data.symbol})</div>
-							<div className={styles.priceRow}>
-								<div className={styles.rightPrice}>${parseFloat(data.priceUsd).toLocaleString('en', {
-									minimumFractionDigits: 2,
-									maximumFractionDigits: 2
-								})}</div>
-								<Tag
-									className={styles.percentTag}
-									backgroundColor={parseFloat(data.changePercent24Hr) > 0 ? 'green' : 'red'}
-									padding='big'
-									fontSize='big'
-									textColor='white'
-									borderRadius='big'
-								>
-									<ArrowIcon className={cn(styles.arrowPercent, {
-										[styles.arrowUp]: parseFloat(data.changePercent24Hr) > 0,
-										[styles.arrowDown]: parseFloat(data.changePercent24Hr) <= 0
-									})} />
-									{parseFloat(data.changePercent24Hr).toFixed(2)}%
-								</Tag>
-							</div>
-							{BTCData && <div className={styles.rightCompare}>{min4Digits(parseFloat(data.priceUsd) / parseFloat(BTCData.priceUsd))} BTC</div>}
-							{ETHData && <div className={styles.rightCompare}>{min4Digits(parseFloat(data.priceUsd) / parseFloat(ETHData.priceUsd))} ETH</div>}
-							{minMax && <div className={styles.minMaxDiv}>
-								<span className={styles.minMaxText}>Минимум:</span>
-								<span className={styles.minMaxValue}>${minMax.minPrice.toLocaleString('en', {
-									minimumFractionDigits: 2,
-									maximumFractionDigits: 2
-								})}</span>
-								<Strip cursor='auto' strip={{ max: minMax.maxPrice - minMax.minPrice, fill: parseFloat(data.priceUsd) - minMax.minPrice }} />
-								<span className={styles.minMaxText}>Максимум:</span>
-								<span className={styles.minMaxValue}>${minMax.maxPrice.toLocaleString('en', {
-									minimumFractionDigits: 2,
-									maximumFractionDigits: 2
-								})}</span>
-							</div>}
+					<div className={styles.rightHeader}>
+						<div className={styles.rightName}>Цена {data.name} ({data.symbol})</div>
+						<div className={styles.priceRow}>
+							<div className={styles.rightPrice}>${parseFloat(data.priceUsd).toLocaleString('en', {
+								minimumFractionDigits: 2,
+								maximumFractionDigits: 2
+							})}</div>
+							<Tag
+								className={styles.percentTag}
+								backgroundColor={parseFloat(data.changePercent24Hr) > 0 ? 'green' : 'red'}
+								padding='big'
+								fontSize='big'
+								textColor='white'
+								borderRadius='big'
+							>
+								<ArrowIcon className={cn(styles.arrowPercent, {
+									[styles.arrowUp]: parseFloat(data.changePercent24Hr) > 0,
+									[styles.arrowDown]: parseFloat(data.changePercent24Hr) <= 0
+								})} />
+								{parseFloat(data.changePercent24Hr).toFixed(2)}%
+							</Tag>
 						</div>
+						{BTCData && <div className={styles.rightCompare}>{min4Digits(parseFloat(data.priceUsd) / parseFloat(BTCData.priceUsd))} BTC</div>}
+						{ETHData && <div className={styles.rightCompare}>{min4Digits(parseFloat(data.priceUsd) / parseFloat(ETHData.priceUsd))} ETH</div>}
+						{minMax && <div className={styles.minMaxDiv}>
+							<span className={styles.minMaxText}>Минимум:</span>
+							<span className={styles.minMaxValue}>${minMax.minPrice.toLocaleString('en', {
+								minimumFractionDigits: 2,
+								maximumFractionDigits: 2
+							})}</span>
+							<Strip
+								className={styles.minMaxStrip}
+								cursor='auto'
+								strip={{ max: minMax.maxPrice - minMax.minPrice, fill: parseFloat(data.priceUsd) - minMax.minPrice }}
+							/>
+							<span className={styles.minMaxText}>Максимум:</span>
+							<span className={styles.minMaxValue}>${minMax.maxPrice.toLocaleString('en', {
+								minimumFractionDigits: 2,
+								maximumFractionDigits: 2
+							})}</span>
+						</div>}
+					</div>
+					<Button color='grey' className={styles.showButton}>Показать статистику</Button>
+					<div className={styles.rightAdd}>
 						<div className={styles.statsDiv}>
 							<CurrencyPart
 								className={styles.statsPart}

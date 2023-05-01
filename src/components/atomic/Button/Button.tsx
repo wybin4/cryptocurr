@@ -8,7 +8,8 @@ export const Button = ({ color = 'blue', className, children, ...props }: Button
 	return (
 		<button
 			className={cn(className, styles.button, {
-				[styles.blue]: color === 'blue'
+				[styles.blue]: color === 'blue',
+				[styles.grey]: color === 'grey'
 			})}
 			{...props}
 		>

@@ -1,11 +1,177 @@
-.currencyDetails {
-	display: grid;
-	grid-template-columns: [start] auto [medium] 1fr [end] 10px;
-	gap: 120px;
+@media (min-width: 1211px) {
+	.showButton {
+		display: none;
+	}
+
+	.currencyDetails {
+		display: grid;
+		grid-template-columns: [start] auto [medium] 1fr [end] 10px;
+		gap: 0px 120px;
+	}
+
+	.leftPart {
+		grid-column: start / medium;
+	}
+
+	.rightAdd {
+		grid-column: medium / end;
+	}
+
+	.rightHeader {
+		text-align: left;
+	}
+
+	.priceRow {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+	}
+
+	.minMaxStrip {
+		width: 200px;
+	}
 }
 
-.leftPart {
-	grid-column: start / medium;
+@media (max-width: 1210px) {
+	.showButton {
+		display: none;
+	}
+
+	.currencyDetails {
+		display: grid;
+		grid-template-areas:
+			'nav .'
+			'header price'
+			'addinfo addinfo'
+		;
+		grid-template-columns: auto auto;
+		gap: 30px;
+	}
+
+	.leftNav {
+		grid-area: nav;
+		margin-bottom: -10px !important;
+	}
+
+	.leftPart {
+		grid-area: header;
+	}
+
+	.rightHeader {
+		grid-area: price;
+	}
+
+	.rightAdd {
+		grid-area: addinfo;
+		justify-self: center;
+	}
+
+	.rightHeader {
+		text-align: right;
+	}
+
+	.priceRow {
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+		gap: 10px;
+	}
+
+	.minMaxDiv {
+		justify-content: end;
+	}
+
+	.minMaxStrip {
+		width: 200px;
+	}
+}
+
+@media (max-width: 980px) {
+	.showButton {
+		display: block;
+		grid-area: more;
+	}
+
+	.currencyDetails {
+		display: grid;
+		grid-template-areas:
+			'header'
+			'price'
+			'more'
+		;
+		grid-template-columns: auto;
+		gap: 30px;
+	}
+
+	.currName,
+	.symbol,
+	.leftNav {
+		display: none !important;
+	}
+
+	.rightAdd {
+		display: none !important;
+	}
+
+	.leftPart {
+		grid-area: header;
+	}
+
+	.rightHeader {
+		text-align: left;
+	}
+
+	.priceRow {
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+		gap: 10px;
+	}
+
+	.minMaxDiv {
+		justify-content: flex-start;
+	}
+
+	.minMaxStrip {
+		width: 200px;
+	}
+
+	.priceRow {
+		justify-content: space-between;
+	}
+
+	.minMaxDiv {
+		display: grid !important;
+		grid-template-rows: auto auto;
+		grid-template-columns: auto 1fr auto auto auto;
+		grid-template-areas:
+			'textMinMax1 valMinMax1 . textMinMax2 valMinMax2'
+			'stripMinMax stripMinMax stripMinMax stripMinMax stripMinMax';
+	}
+
+	.minMaxStrip {
+		width: 100% !important;
+		grid-area: stripMinMax;
+	}
+
+
+
+	.minMaxText:last-child {
+		grid-area: textMinMax2;
+	}
+
+	.minMaxValue:first-child {
+		grid-area: valMinMax1;
+	}
+
+}
+
+@media (max-width: 600px) {
+
+	.minMaxText,
+	.minMaxValue {
+		font-size: 12px !important;
+	}
 }
 
 .leftHeader {
@@ -74,9 +240,7 @@
 	font-weight: 500;
 }
 
-.rightPart {
-	grid-column: medium / end;
-}
+
 
 .infoTip {
 	margin-left: 5px;
@@ -117,15 +281,6 @@
 	transform: rotate(180deg);
 }
 
-.rightHeader {
-	text-align: left;
-}
-
-.priceRow {
-	display: flex;
-	align-items: center;
-	gap: 10px;
-}
 
 .minMaxDiv {
 	display: flex;
