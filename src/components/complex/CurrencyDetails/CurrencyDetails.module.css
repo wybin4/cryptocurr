@@ -1,3 +1,7 @@
+.currencyDetails {
+	margin: 40px;
+}
+
 @media (min-width: 1211px) {
 	.showButton {
 		display: none;
@@ -5,7 +9,7 @@
 
 	.currencyDetails {
 		display: grid;
-		grid-template-columns: [start] auto [medium] 1fr [end] 10px;
+		grid-template-columns: [start] auto [medium] 1fr [end] 120px;
 		gap: 0px 120px;
 	}
 
@@ -109,9 +113,45 @@
 		display: none !important;
 	}
 
-	.rightAdd {
+	/*********/
+	.statsNone {
 		display: none !important;
 	}
+
+	.statsBlock {
+		display: block !important;
+	}
+
+	.rightAdd {
+		grid-area: auto;
+		grid-column: auto;
+	}
+
+	.statsDiv {
+		display: block !important;
+	}
+
+	.statsPart {
+		max-width: 100% !important;
+	}
+
+	.statsPart {
+		border-left: none !important;
+		border-top: none !important;
+		padding-left: 0px !important;
+	}
+
+	.statsPart:not(:first-child) {
+		padding-top: 30px;
+
+	}
+
+	.statsPart:not(:last-child) {
+		padding-bottom: 30px;
+		border-bottom: solid 1px var(--light-grey);
+	}
+
+	/********/
 
 	.leftPart {
 		grid-area: header;
@@ -324,5 +364,5 @@
 }
 
 .statsPart:not(:last-child) {
-	padding-right: 30px;
+	padding-right: 20px;
 }

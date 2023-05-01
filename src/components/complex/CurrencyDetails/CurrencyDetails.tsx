@@ -22,6 +22,7 @@ export const CurrencyDetails = ({ className, ...props }: CurrencyDetailsProps): 
 	const [BTCData, setBTCData] = useState<CurrencyModel>();
 	const [ETHData, setETHData] = useState<CurrencyModel>();
 	const [minMax, setMinMax] = useState<{ minPrice: number, maxPrice: number }>();
+	const [stats, setStats] = useState<boolean>(false);
 
 	const getFDMC = (): number | undefined => {
 		if (!data) {
@@ -186,8 +187,18 @@ export const CurrencyDetails = ({ className, ...props }: CurrencyDetailsProps): 
 							})}</span>
 						</div>}
 					</div>
-					<Button color='grey' className={styles.showButton}>Показать статистику</Button>
-					<div className={styles.rightAdd}>
+					<Button
+						color='grey'
+						className={styles.showButton}
+						onClick={() => setStats(!stats)}
+					>
+						{!stats && <>Показать статистику</>}
+						{stats && <>Скрыть статистику</>}
+					</Button>
+					<div className={cn(styles.rightAdd, {
+						[styles.statsNone]: stats === false,
+						[styles.statsBlock]: stats === true,
+					})}>
 						<div className={styles.statsDiv}>
 							<CurrencyPart
 								className={styles.statsPart}

@@ -14,14 +14,16 @@ export const CurrencyPart = ({ horizontalAlign, propName, propValue, propSymbol,
 			{...props}
 		>
 			<div className={styles.mainPart}>
-				<div className={styles.nameTipDiv}>
-					<div className={styles.name}>{propName}</div>
-					{tooltipText && <InfoIcon tooltipText={tooltipText} className={styles.tip} />}
-				</div>
-				<div className={styles.value}>
-					{horizontalAlign === 'start' && <span>{propSymbol}</span>}
-					<span>{getFixedSymbols(propValue, 0)}</span>
-					{horizontalAlign === 'end' && <span>{propSymbol}</span>}
+				<div className={styles.namePart}>
+					<div className={styles.nameTipDiv}>
+						<div className={styles.name}>{propName}</div>
+						{tooltipText && <InfoIcon tooltipText={tooltipText} className={styles.tip} />}
+					</div>
+					<div className={styles.value}>
+						{horizontalAlign === 'start' && <span>{propSymbol}</span>}
+						<span>{getFixedSymbols(propValue, 0)}</span>
+						{horizontalAlign === 'end' && <span>{propSymbol}</span>}
+					</div>
 				</div>
 				{propPercent && <div className={styles.percent}>{propPercent}%</div>}
 				{propStrip && <Strip cursor='auto' strip={propStrip} className={styles.strip} />}
@@ -42,17 +44,6 @@ export const CurrencyPart = ({ horizontalAlign, propName, propValue, propSymbol,
 					)}
 				</div>
 			}
-
-			{/* {additionalInfo && additionalInfo.map(info => <>
-				<div className={styles.addInfoDiv}>
-					<div className={styles.name}>
-						{info.addName}
-						{info.addTooltipText && <InfoIcon tooltipText={info.addTooltipText} className={styles.addInfoTip} />}
-					</div>
-					{!isNaN(parseFloat(info.addValue)) && <div className={styles.value}>{info.addSymbol}{getCommas(min4Digits(parseFloat(info.addValue)))}</div>}
-					{isNaN(parseFloat(info.addValue)) && <div className={styles.value}>--</div>}
-				</div>
-			</>)} */}
 		</div>
 	);
 };

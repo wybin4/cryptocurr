@@ -1,3 +1,35 @@
+@media screen and (max-width: 980px) {
+
+	.namePart {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	.addInfoName,
+	.addInfoValue {
+		font-size: 12px !important;
+	}
+
+	.addInfoDiv {
+		/* display: flex !important; */
+		flex-wrap: wrap;
+		justify-content: space-between !important;
+	}
+
+	.addInfoValue {
+		text-align: end;
+	}
+
+	.value {
+		text-align: end;
+	}
+
+	.strip {
+		width: 100% !important;
+	}
+}
+
+
 .mainPart {
 	margin-bottom: 30px;
 }
@@ -36,17 +68,6 @@
 	margin-top: 2px;
 }
 
-/* .addInfoDiv {
-	display: grid;
-	grid-template-columns: [start] 1fr [middle] auto [end];
-	gap: 25px;
-} */
-
-/* .addInfoDiv>.addInfoName {
-	display: grid;
-	grid-template-columns: auto 1fr;
-	align-items: center;
-} */
 .addInfoDiv {
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
@@ -57,6 +78,7 @@
 .addInfoName {
 	display: flex;
 	align-items: center;
+	gap: 5px;
 }
 
 .addInfoTip {
