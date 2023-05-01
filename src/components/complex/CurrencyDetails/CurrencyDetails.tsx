@@ -11,7 +11,7 @@ import { ReactComponent as UserIcon } from './svg/user.svg';
 import { ReactComponent as ArrowLeftIcon } from './svg/arrowLeft.svg';
 import { ReactComponent as ArrowIcon } from './svg/arrow.svg';
 import { CurrencyPart } from '../../atomic/CurrencyPart/CurrencyPart';
-import { whatIsCap, whatIsFDMC, whatIsMaxSupply, whatIsSupply } from '../RateTable/RateTable';
+import { whatIsCap, whatIsFDMC, whatIsMaxSupply, whatIsSupply, whatIsVolume } from '../RateTable/RateTable';
 import { min4Digits } from '../../../helpers/convert';
 import { Strip } from '../../atomic/Strip/Strip';
 
@@ -194,11 +194,11 @@ export const CurrencyDetails = ({ className, ...props }: CurrencyDetailsProps): 
 							/>
 							<CurrencyPart
 								className={styles.statsPart}
-								propName='Рыночная капитализация при полной эмиссии'
-								propValue={getFDMC() ? String(getFDMC()) : '--'}
+								propName='Объём за 24ч'
+								propValue={data.volumeUsd24Hr}
 								propSymbol='$'
 								horizontalAlign='start'
-								tooltipText={whatIsFDMC}
+								tooltipText={whatIsVolume}
 							/>
 							<CurrencyPart
 								className={styles.statsPart}
@@ -211,6 +211,14 @@ export const CurrencyDetails = ({ className, ...props }: CurrencyDetailsProps): 
 								additionalInfo={[{ addName: 'Максимальное предложение', addValue: data.maxSupply, addTooltipText: whatIsMaxSupply },
 								{ addName: 'Общее предложение', addValue: data.supply, addTooltipText: whatIsSupply }]}
 							/>
+							{/* <CurrencyPart
+								className={styles.statsPart}
+								propName='Рыночная капитализация при полной эмиссии'
+								propValue={getFDMC() ? String(getFDMC()) : '--'}
+								propSymbol='$'
+								horizontalAlign='start'
+								tooltipText={whatIsFDMC}
+							/> */}
 						</div>
 					</div>
 				</div >
