@@ -7,6 +7,7 @@ import { Sparkline } from '../Sparkline/Sparkline';
 import axios from 'axios';
 import { SparklineDataModel } from '../Sparkline/Sparkline.props';
 import { UseQueryResult, useQuery } from 'react-query';
+import { Link } from 'react-router-dom';
 
 export const TableRow = ({ data, className, ...props }: TableRowProps): JSX.Element => {
 
@@ -54,7 +55,7 @@ export const TableRow = ({ data, className, ...props }: TableRowProps): JSX.Elem
 				imageAlt={data.id}
 				horizontalAlign='start'
 			>
-				{data.name}
+				<Link to={`/currencies/${data.id}`}>{data.name}</Link>
 			</TableData>
 			<TableData symbol='$' symbolPosition='before' horizontalAlign='end'>{data.priceUsd}</TableData>
 			<TableData symbol='%' symbolPosition='after' horizontalAlign='end' arrowType={parseFloat(data.changePercent24Hr) < 0 ? 'bottom' : 'top'}>{data.changePercent24Hr}</TableData>

@@ -1,7 +1,8 @@
 import React from 'react';
 import './App.css';
-import { RateTable, TooltipProvider } from './components';
+import { CurrencyDetails, RateTable, TooltipProvider } from './components';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 const queryClient = new QueryClient();
 
@@ -9,10 +10,21 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <div className="App">
-        <p className='cryptoText'>Топ криптовалюты по рыночной капитализации</p>
-        <TooltipProvider>
-          <RateTable />
-        </TooltipProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/"
+              element={
+                <TooltipProvider>
+                  <p className='cryptoText'>Топ криптовалюты по рыночной капитализации</p>
+                  <RateTable />
+                </TooltipProvider>
+              }
+            />
+          </Routes>
+          <Routes>
+            <Route path="/currencies/:name" element={<CurrencyDetails />} />
+          </Routes>
+        </BrowserRouter>
       </div>
     </QueryClientProvider>
   );

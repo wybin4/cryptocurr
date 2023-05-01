@@ -1,0 +1,56 @@
+.mainPart {
+	margin-bottom: 30px;
+}
+
+
+.partDiv {
+	text-align: start;
+}
+
+.name {
+	color: var(--dark-grey-text);
+	font-size: 14px;
+	font-weight: 500;
+}
+
+.name:not(.addInfoDiv > .name) {
+	margin-bottom: 10px;
+}
+
+.value {
+	font-size: 14px;
+	font-weight: 600;
+}
+
+.nameTipDiv {
+	display: flex;
+	align-self: baseline;
+	gap: 5px;
+
+	cursor: pointer;
+}
+
+.nameTipDiv>.tip {
+	margin-top: 2px;
+}
+
+.addInfoDiv {
+	display: grid;
+	grid-template-columns: [start] 1fr [middle] auto [end];
+	gap: 25px;
+}
+
+.addInfoDiv>.name {
+	display: flex;
+}
+
+.addInfoTip {
+	margin-left: 5px;
+	margin-top: 2px;
+
+	cursor: pointer;
+}
+
+.strip {
+	margin-top: 15px;
+}

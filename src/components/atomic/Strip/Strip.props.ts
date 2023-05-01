@@ -6,6 +6,7 @@ export interface StripModel {
 }
 
 export interface StripProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+	cursor?: 'pointer' | 'auto';
 	width?: string;
 	strip: StripModel;
 }

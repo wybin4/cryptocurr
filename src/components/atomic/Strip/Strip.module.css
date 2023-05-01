@@ -18,3 +18,11 @@
 
 	background: var(--medium-grey);
 }
+
+.pointer {
+	cursor: pointer;
+}
+
+.auto {
+	cursor: auto;
+}

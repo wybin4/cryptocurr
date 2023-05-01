@@ -9,15 +9,14 @@ import { Image } from '../Image/Image';
 import { TooltipContext } from '../Tooltip/Tooltip';
 import { TooltipModel } from '../Tooltip/Tooltip.props';
 import { StripModel } from '../Strip/Strip.props';
+import { getPositionDiv } from '../../../helpers/tooltipPosition';
 
 export const TableData = ({ horizontalAlign, image, imageAlt, mainTextWeight = 'medium', strip, arrowType, commaSeparate = true, symbol, symbolPosition, fixed = 2, greyText, greyTextFontSize = 'standard', greyTextPosition = 'right', greyTextSymbol = '', children, className, ...props }: TableDataProps): JSX.Element => {
 	const { showTooltip, hideTooltip } = useContext(TooltipContext);
 
-	const handleTableDataMouseEnter = (e: React.MouseEvent<HTMLDivElement>, strip: StripModel, symbol: string) => {
+	const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>, strip: StripModel, symbol: string) => {
 		const tooltip: TooltipModel = { strip: strip, symbol: symbol };
-		const element = e.target as HTMLElement;
-		const rect = element.getBoundingClientRect();
-		const position = { x: rect.left + window.scrollX - 100, y: rect.top + window.scrollY + 30 };
+		const position = getPositionDiv(e, -100, 30);
 		showTooltip(tooltip, position);
 	};
 
@@ -87,7 +86,7 @@ export const TableData = ({ horizontalAlign, image, imageAlt, mainTextWeight = '
 					<Strip
 						className={styles.strip}
 						strip={strip}
-						onMouseEnter={(e: React.MouseEvent<HTMLDivElement>) => handleTableDataMouseEnter(e, strip, symbol ? symbol : '')}
+						onMouseEnter={(e: React.MouseEvent<HTMLDivElement>) => handleMouseEnter(e, strip, symbol ? symbol : '')}
 						onMouseLeave={onMouseLeave}
 					/>}
 			</span>

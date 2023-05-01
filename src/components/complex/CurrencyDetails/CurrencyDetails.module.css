@@ -1,0 +1,172 @@
+.currencyDetails {
+	display: grid;
+	grid-template-columns: [start] auto [medium] 1fr [end] 10px;
+	gap: 120px;
+}
+
+.leftPart {
+	grid-column: start / medium;
+}
+
+.leftHeader {
+	display: grid;
+	grid-template-columns: [startimg] 32px [endimg] auto [endtext] 1fr [endtag];
+	gap: 15px;
+}
+
+.image {
+	grid-column: startimg / endimg;
+	align-self: center;
+}
+
+.currName {
+	font-weight: 700;
+	font-size: 32px;
+	line-height: 42px;
+
+	grid-column: endimg / endtext;
+}
+
+.symbol {
+	grid-column: endtext / endtag;
+	align-self: center;
+	justify-self: start;
+}
+
+.leftSecondLine {
+	display: flex;
+	gap: 15px;
+	margin-top: 15px;
+}
+
+.rank,
+.coin {
+	justify-self: start;
+}
+
+.links {
+	display: flex;
+	gap: 15px;
+	margin-top: 15px;
+}
+
+.backLink {
+	color: var(--dark-grey-text);
+
+	font-size: 14px;
+}
+
+.backLink:hover {
+	text-decoration: underline;
+}
+
+.arrowBack {
+	fill: var(--dark-grey-text);
+	margin-left: 10px;
+	margin-right: 10px;
+	align-self: center;
+}
+
+.leftNav {
+	display: flex;
+
+	margin-bottom: 20px;
+	font-weight: 500;
+}
+
+.rightPart {
+	grid-column: medium / end;
+}
+
+.infoTip {
+	margin-left: 5px;
+	vertical-align: middle;
+}
+
+.rightName {
+	color: var(--dark-grey-text);
+	font-size: 14px;
+	font-weight: 500;
+
+	margin-bottom: 10px;
+}
+
+.rightCompare {
+	color: var(--dark-grey-text);
+
+	margin-top: 10px;
+
+	font-weight: 500;
+}
+
+.rightPrice {
+	font-size: 30px;
+	font-weight: 700
+}
+
+.arrowPercent {
+	margin-right: 5px;
+}
+
+.percentTag {
+	display: flex;
+	align-items: center;
+}
+
+.arrowDown {
+	transform: rotate(180deg);
+}
+
+.rightHeader {
+	text-align: left;
+}
+
+.priceRow {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.minMaxDiv {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+
+	margin-top: 10px;
+}
+
+.minMaxText {
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 18px;
+
+	color: var(--dark-grey-text);
+}
+
+.minMaxValue {
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 22px;
+}
+
+.statsDiv {
+	display: flex;
+	justify-self: start;
+
+	border-top: solid 1px var(--light-grey);
+	margin-top: 30px;
+	padding-top: 30px;
+}
+
+.statsPart {
+	max-width: 300px;
+}
+
+.statsPart:not(:first-child) {
+	border-left: solid 1px var(--light-grey);
+	padding-left: 30px;
+}
+
+.statsPart:not(:last-child) {
+	padding-right: 30px;
+}
