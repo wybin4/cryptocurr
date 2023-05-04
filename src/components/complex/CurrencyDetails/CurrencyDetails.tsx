@@ -3,7 +3,7 @@ import styles from './CurrencyDetails.module.css';
 import { CurrencyDetailsProps, CurrencyModel } from './CurrencyDetails.props';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Image } from '../../atomic/Image/Image';
 import { Tag } from '../../atomic/Tag/Tag';
 import { ReactComponent as LinkIcon } from './svg/link.svg';
@@ -11,29 +11,34 @@ import { ReactComponent as UserIcon } from './svg/user.svg';
 import { ReactComponent as ArrowLeftIcon } from './svg/arrowLeft.svg';
 import { ReactComponent as ArrowIcon } from './svg/arrow.svg';
 import { CurrencyPart } from '../../atomic/CurrencyPart/CurrencyPart';
-import { whatIsCap, whatIsFDMC, whatIsMaxSupply, whatIsSupply, whatIsVolume } from '../RateTable/RateTable';
+import { whatIsCap, whatIsMaxSupply, whatIsSupply, whatIsVolume } from '../RateTable/RateTable';
 import { min4Digits } from '../../../helpers/convert';
 import { Strip } from '../../atomic/Strip/Strip';
 import { Button } from '../../atomic/Button/Button';
+import { Chart } from '../../atomic/Chart/Chart';
+import { ChartModel, IntervalType } from '../../atomic/Chart/Chart.props';
 
 export const CurrencyDetails = ({ className, ...props }: CurrencyDetailsProps): JSX.Element => {
 	const { name } = useParams<{ name: string }>();
 	const [data, setData] = useState<CurrencyModel>();
+	const [chartData, setChartData] = useState<ChartModel[]>();
+	const [interval, setInterval] = useState<IntervalType>('w1');
+
 	const [BTCData, setBTCData] = useState<CurrencyModel>();
 	const [ETHData, setETHData] = useState<CurrencyModel>();
 	const [minMax, setMinMax] = useState<{ minPrice: number, maxPrice: number }>();
 	const [stats, setStats] = useState<boolean>(false);
 
-	const getFDMC = (): number | undefined => {
-		if (!data) {
-			return;
-		}
-		if (data.maxSupply) {
-			return parseFloat(data.maxSupply) * parseFloat(data.priceUsd);
-		} else {
-			return parseFloat(data.supply) * parseFloat(data.priceUsd);
-		}
-	}
+	// const getFDMC = (): number | undefined => {
+	// 	if (!data) {
+	// 		return;
+	// 	}
+	// 	if (data.maxSupply) {
+	// 		return parseFloat(data.maxSupply) * parseFloat(data.priceUsd);
+	// 	} else {
+	// 		return parseFloat(data.supply) * parseFloat(data.priceUsd);
+	// 	}
+	// }
 
 	const getMinMax = async () => {
 		const now = Date.now();
@@ -100,6 +105,7 @@ export const CurrencyDetails = ({ className, ...props }: CurrencyDetailsProps): 
 
 	useEffect(() => {
 		getData();
+		fetchChartData();
 		if (name !== 'bitcoin') {
 			getBTC();
 		} if (name !== 'ethereum') {
@@ -108,7 +114,27 @@ export const CurrencyDetails = ({ className, ...props }: CurrencyDetailsProps): 
 		getMinMax();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
+	const svgRef = useRef<SVGSVGElement | null>(null);
 
+	const INTERVAL_IN_MS: Record<IntervalType, number> = {
+		d1: 24 * 60 * 60 * 1000,
+		w1: 7 * 24 * 60 * 60 * 1000,
+		m1: 30 * 24 * 60 * 60 * 1000,
+		m3: 3 * 30 * 24 * 60 * 60 * 1000,
+		y1: 365 * 24 * 60 * 60 * 1000,
+	};
+
+	const fetchChartData = async () => {
+		const now = Date.now();
+		const start = now - INTERVAL_IN_MS[interval];
+		const response = await axios.get(`https://api.coincap.io/v2/assets/${name}/history?interval=h1&start=${start}&end=${now}`);
+		setChartData(response.data.data.map((point: ChartModel) => ({
+			priceUsd: point.priceUsd,
+			time: new Date(point.time),
+			circulatingSupply: point.circulatingSupply,
+			date: point.date
+		})));
+	};
 	return (
 		<>
 			{data &&
@@ -251,6 +277,9 @@ export const CurrencyDetails = ({ className, ...props }: CurrencyDetailsProps): 
 								tooltipText={whatIsFDMC}
 							/> */}
 						</div>
+					</div>
+					<div className={styles.chartDiv}>
+						{name && chartData && <Chart data={chartData} name={name} svgRef={svgRef} />}
 					</div>
 				</div >
 			}

@@ -4,6 +4,7 @@ import styles from './Tooltip.module.css';
 import { Strip } from '../Strip/Strip';
 import { ReactNode, createContext, useState } from 'react';
 import { motion } from 'framer-motion';
+import { getTimeString } from '../../../helpers/time';
 
 interface ITooltipContext {
 	showTooltip: (tooltip: TooltipModel, position: { x: number; y: number }) => void;
@@ -75,15 +76,15 @@ export const Tooltip = ({ x, y, tooltip, className, ...props }: TooltipProps): J
 				})} {tooltip.symbol}</div>
 			</>}
 			{tooltip.priceUsd && <>
-				<div className={cn(styles.toolBold, styles.dateText)}>{tooltip.date}</div>
-				<div className={cn(styles.toolGrey, styles.timeText)}>{tooltip.time}</div>
+				<div className={cn(styles.toolBold, styles.dateText)}>{new Date(tooltip.date).toJSON().slice(0, 10).split('-').reverse().join('/')}</div>
+				<div className={cn(styles.toolGrey, styles.timeText)}>{getTimeString(tooltip.time)}</div>
 				<div className={cn(styles.toolGrey, styles.priceText)}>Цена</div>
 				<div className={cn(styles.toolBold, styles.price)}>${parseFloat(tooltip.priceUsd).toLocaleString('en', {
 					minimumFractionDigits: 2,
 					maximumFractionDigits: 2
 				})}</div>
-				<div className={cn(styles.toolGrey, styles.volText)}>Объем 24ч</div>
-				<div className={cn(styles.toolBold, styles.vol)}>${parseFloat(tooltip.volumeUsd24Hr).toLocaleString('en', {
+				<div className={cn(styles.toolGrey, styles.volText)}>Циркулирующее предложение</div>
+				<div className={cn(styles.toolBold, styles.vol)}>{parseFloat(tooltip.circulatingSupply).toLocaleString('en', {
 					minimumFractionDigits: 0,
 					maximumFractionDigits: 0
 				})}</div>

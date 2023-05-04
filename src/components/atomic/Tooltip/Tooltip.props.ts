@@ -11,7 +11,7 @@ export interface graphTooltip {
 	date: string;
 	time: string;
 	priceUsd: string;
-	volumeUsd24Hr: string;
+	circulatingSupply: string;
 }
 
 export interface infoTooltip {

@@ -10,4 +10,5 @@ export * from './atomic/Image/Image';
 export * from './atomic/Sparkline/Sparkline';
 export * from './atomic/Tag/Tag';
 export * from './atomic/CurrencyPart/CurrencyPart';
-export * from './atomic/InfoIcon/InfoIcon'; 
+export * from './atomic/InfoIcon/InfoIcon';
+export * from './atomic/Chart/Chart'; 

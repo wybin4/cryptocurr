@@ -366,3 +366,8 @@
 .statsPart:not(:last-child) {
 	padding-right: 20px;
 }
+
+.chartDiv {
+	width: 100vh;
+	height: 500px;
+}
