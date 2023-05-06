@@ -11,6 +11,5 @@ export interface ChartModel {
 
 export interface ChartProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
 	name: string;
-	svgRef: React.RefObject<SVGSVGElement>;
 	data: ChartModel[];
 }

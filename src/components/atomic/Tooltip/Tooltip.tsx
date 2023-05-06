@@ -2,7 +2,7 @@ import { TooltipModel, TooltipProps } from './Tooltip.props';
 import cn from 'classnames';
 import styles from './Tooltip.module.css';
 import { Strip } from '../Strip/Strip';
-import { ReactNode, createContext, useState } from 'react';
+import { ForwardedRef, ReactNode, createContext, forwardRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { getTimeString } from '../../../helpers/time';
 
@@ -50,7 +50,7 @@ export const TooltipProvider = ({ children }: IProps): JSX.Element => {
 	);
 };
 
-export const Tooltip = ({ x, y, tooltip, className, ...props }: TooltipProps): JSX.Element => {
+export const Tooltip = forwardRef(({ x, y, tooltip, className, ...props }: TooltipProps, ref: ForwardedRef<HTMLDivElement>): JSX.Element => {
 	return (
 		<div
 			className={cn(className, {
@@ -94,4 +94,4 @@ export const Tooltip = ({ x, y, tooltip, className, ...props }: TooltipProps): J
 			</>}
 		</div>
 	);
-};
+});

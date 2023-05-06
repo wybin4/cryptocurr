@@ -227,6 +227,7 @@ export const CurrencyDetails = ({ className, ...props }: CurrencyDetailsProps): 
 					})}>
 						<div className={styles.statsDiv}>
 							<CurrencyPart
+								key="marketCapUsd"
 								className={styles.statsPart}
 								propName='Рыночная капитализация'
 								propValue={data.marketCapUsd}
@@ -236,6 +237,7 @@ export const CurrencyDetails = ({ className, ...props }: CurrencyDetailsProps): 
 								additionalInfo={[{ addName: 'Объём за 24ч / Рыночная капитализация', addValue: (parseFloat(data.volumeUsd24Hr) / parseFloat(data.marketCapUsd)).toString() }]}
 							/>
 							<CurrencyPart
+								key="volumeUsd24Hr"
 								className={styles.statsPart}
 								propName='Объём за 24ч'
 								propValue={data.volumeUsd24Hr}
@@ -245,6 +247,7 @@ export const CurrencyDetails = ({ className, ...props }: CurrencyDetailsProps): 
 							/>
 							{data.maxSupply &&
 								<CurrencyPart
+									key="circulationSupplyMax"
 									className={styles.statsPart}
 									propName='Циркулирующее предложение'
 									propValue={data.supply}
@@ -258,6 +261,7 @@ export const CurrencyDetails = ({ className, ...props }: CurrencyDetailsProps): 
 							}
 							{!parseFloat(data.maxSupply) &&
 								<CurrencyPart
+									key="circulationSupply"
 									className={styles.statsPart}
 									propName='Циркулирующее предложение'
 									propValue={data.supply}
@@ -268,18 +272,10 @@ export const CurrencyDetails = ({ className, ...props }: CurrencyDetailsProps): 
 									{ addName: 'Общее предложение', addValue: data.supply, addTooltipText: whatIsSupply }]}
 								/>
 							}
-							{/* <CurrencyPart
-								className={styles.statsPart}
-								propName='Рыночная капитализация при полной эмиссии'
-								propValue={getFDMC() ? String(getFDMC()) : '--'}
-								propSymbol='$'
-								horizontalAlign='start'
-								tooltipText={whatIsFDMC}
-							/> */}
 						</div>
 					</div>
 					<div className={styles.chartDiv}>
-						{name && chartData && <Chart data={chartData} name={name} svgRef={svgRef} />}
+						{name && chartData && <Chart data={chartData} name={name} />}
 					</div>
 				</div >
 			}

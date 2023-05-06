@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import styles from './Chart.module.css';
 import { Tooltip } from '../Tooltip/Tooltip';
+import { motion } from 'framer-motion';
 
 export const Chart = ({ data, name, ...props }: ChartProps): JSX.Element => {
 
@@ -46,8 +47,8 @@ export const Chart = ({ data, name, ...props }: ChartProps): JSX.Element => {
 			.append("circle")
 			.classed("tool-tip-dot", true)
 			.attr("r", 5)
-			.attr("fill", "#fc8781")
-			.attr("stroke", "black")
+			.attr("fill", "var(--blue)")
+			.attr("stroke", "var(--white)")
 			.attr("stroke-width", 2)
 			.style("opacity", 0)
 			.style("pointer-events", "none");
@@ -69,7 +70,7 @@ export const Chart = ({ data, name, ...props }: ChartProps): JSX.Element => {
 			.datum(data)
 			.attr("d", lineGenerator)
 			.attr("fill", "none")
-			.attr("stroke", "#30475e")
+			.attr("stroke", "var(--blue)")
 			.attr("stroke-width", 2);
 
 		const yAxis = d3.axisLeft(yScale).tickFormat((d) => `${d}`);
@@ -111,24 +112,32 @@ export const Chart = ({ data, name, ...props }: ChartProps): JSX.Element => {
 			})
 			.on("mouseleave", function () {
 				tooltipDot.style("opacity", 0);
-				tooltip.style("display", "none");
+				tooltip.style("opacity", 0);
+				setTooltipData(undefined);
 			});
 	}, [data]);
 
 	return (
-		<div>
+		<div {...props}>
 			<svg ref={svgRef} />
 			{tooltipData && tooltipXY && (
-				<Tooltip
-					ref={tooltipRef}
-					tooltip={{
-						priceUsd: String(tooltipData.priceUsd),
-						time: String(tooltipData.time),
-						circulatingSupply: String(tooltipData.circulatingSupply),
-						date: String(tooltipData.date)
-					}}
-					x={tooltipXY.x}
-					y={tooltipXY.y} />
+				<motion.div
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 1 }}
+					exit={{ opacity: 0 }}
+					transition={{ duration: 1 }}
+				>
+					<Tooltip
+						ref={tooltipRef}
+						tooltip={{
+							priceUsd: String(tooltipData.priceUsd),
+							time: String(tooltipData.time),
+							circulatingSupply: String(tooltipData.circulatingSupply),
+							date: String(tooltipData.date)
+						}}
+						x={tooltipXY.x}
+						y={tooltipXY.y} />
+				</motion.div>
 			)}
 		</div>
 	);

@@ -11,6 +11,7 @@ export const CurrencyPart = ({ horizontalAlign, propName, propValue, propSymbol,
 	return (
 		<div
 			className={cn(className, styles.partDiv)}
+			key={props.key}
 			{...props}
 		>
 			<div className={styles.mainPart}>
