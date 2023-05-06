@@ -1,7 +1,7 @@
 import { ChartModel, ChartProps } from './Chart.props';
 import { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
-import styles from './Chart.module.css';
+// import styles from './Chart.module.css';
 import { Tooltip } from '../Tooltip/Tooltip';
 import { motion } from 'framer-motion';
 
@@ -11,19 +11,46 @@ export const Chart = ({ data, name, ...props }: ChartProps): JSX.Element => {
 	const tooltipRef = useRef(null);
 	const [tooltipData, setTooltipData] = useState<ChartModel>();
 	const [tooltipXY, setTooltipXY] = useState<{ x: number; y: number }>();
+	const chartWidth = (windowWidth: number) => {
+		if (windowWidth >= 1100) { return 1000; } else return windowWidth - 75;
+	}
+	const chartHeight = (windowWidth: number) => {
+		if (windowWidth >= 1100) { return 500; } else return windowWidth / 2;
+	}
+	const getTicksCount = (windowWidth: number) => {
+		if (windowWidth <= 600 && windowWidth > 410) {
+			return 8;
+		} else if (windowWidth <= 410 && windowWidth > 310) {
+			return 5;
+		} else if (windowWidth <= 310) {
+			return 3;
+		}
+		else return undefined;
+	}
+	const [dimensions, setDimensions] = useState({
+		width: chartWidth(window.innerWidth),
+		height: chartHeight(window.innerWidth),
+		margins: 50,
+		containerWidth: 0,
+		containerHeight: 0,
+	});
+	const [ticksCount, setTicksCount] = useState<number | undefined>(getTicksCount(window.innerWidth));
 
 	useEffect(() => {
 
 		let xAccessor = (d: ChartModel) => d.time;
 		let yAccessor = (d: ChartModel) => d.priceUsd;
 
-		let dimensions = {
-			width: 1000,
-			height: 500,
-			margins: 50,
-			containerWidth: 0,
-			containerHeight: 0
+		const handleResize = () => {
+			const newDimensions = {
+				...dimensions,
+				width: chartWidth(window.innerWidth),
+				height: chartHeight(window.innerWidth),
+			};
+			setDimensions(newDimensions);
+			setTicksCount(getTicksCount(window.innerWidth));
 		};
+		window.addEventListener("resize", handleResize);
 
 		dimensions.containerWidth = dimensions.width - dimensions.margins * 2;
 		dimensions.containerHeight = dimensions.height - dimensions.margins * 2;
@@ -72,12 +99,19 @@ export const Chart = ({ data, name, ...props }: ChartProps): JSX.Element => {
 			.attr("fill", "none")
 			.attr("stroke", "var(--blue)")
 			.attr("stroke-width", 2);
-
-		const yAxis = d3.axisLeft(yScale).tickFormat((d) => `${d}`);
-
+		let yAxis;
+		if (ticksCount) {
+			yAxis = d3.axisLeft(yScale).ticks(ticksCount).tickFormat((d) => `${d}`);
+		} else {
+			yAxis = d3.axisLeft(yScale).tickFormat((d) => `${d}`);
+		}
 		container.append("g").classed("yAxis", true).call(yAxis);
-
-		const xAxis = d3.axisBottom(xScale);
+		let xAxis;
+		if (ticksCount) {
+			xAxis = d3.axisBottom(xScale).ticks(ticksCount);
+		} else {
+			xAxis = d3.axisBottom(xScale);
+		}
 
 		container
 			.append("g")
@@ -115,7 +149,11 @@ export const Chart = ({ data, name, ...props }: ChartProps): JSX.Element => {
 				tooltip.style("opacity", 0);
 				setTooltipData(undefined);
 			});
-	}, [data]);
+
+		return () => {
+			window.removeEventListener("resize", handleResize);
+		};
+	}, [data, dimensions, ticksCount]);
 
 	return (
 		<div {...props}>

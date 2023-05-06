@@ -3,7 +3,7 @@ import styles from './CurrencyDetails.module.css';
 import { CurrencyDetailsProps, CurrencyModel } from './CurrencyDetails.props';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Image } from '../../atomic/Image/Image';
 import { Tag } from '../../atomic/Tag/Tag';
 import { ReactComponent as LinkIcon } from './svg/link.svg';
@@ -114,7 +114,6 @@ export const CurrencyDetails = ({ className, ...props }: CurrencyDetailsProps): 
 		getMinMax();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
-	const svgRef = useRef<SVGSVGElement | null>(null);
 
 	const INTERVAL_IN_MS: Record<IntervalType, number> = {
 		d1: 24 * 60 * 60 * 1000,
@@ -275,7 +274,9 @@ export const CurrencyDetails = ({ className, ...props }: CurrencyDetailsProps): 
 						</div>
 					</div>
 					<div className={styles.chartDiv}>
-						{name && chartData && <Chart data={chartData} name={name} />}
+						{name && chartData && <Chart data={chartData}
+							name={name}
+						/>}
 					</div>
 				</div >
 			}

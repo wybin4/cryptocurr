@@ -25,6 +25,10 @@
 		text-align: left;
 	}
 
+	.chartDiv {
+		grid-column: start / end;
+	}
+
 	.priceRow {
 		display: flex;
 		align-items: center;
@@ -47,6 +51,7 @@
 			'nav .'
 			'header price'
 			'addinfo addinfo'
+			'chart chart'
 		;
 		grid-template-columns: auto auto;
 		gap: 30px;
@@ -68,6 +73,10 @@
 	.rightAdd {
 		grid-area: addinfo;
 		justify-self: center;
+	}
+
+	.chartDiv {
+		grid-area: chart;
 	}
 
 	.rightHeader {
@@ -102,9 +111,19 @@
 			'header'
 			'price'
 			'more'
+			'addinfo'
+			'chart'
 		;
 		grid-template-columns: auto;
 		gap: 30px;
+	}
+
+	.rightAdd {
+		grid-area: addinfo;
+	}
+
+	.chartDiv {
+		grid-area: chart;
 	}
 
 	.currName,
@@ -212,6 +231,16 @@
 	.minMaxValue {
 		font-size: 12px !important;
 	}
+
+	.chartDiv {
+		text-align: start !important;
+	}
+}
+
+.chartDiv {
+	width: 80% !important;
+	margin: 0 !important;
+	padding: 0 !important;
 }
 
 .leftHeader {
