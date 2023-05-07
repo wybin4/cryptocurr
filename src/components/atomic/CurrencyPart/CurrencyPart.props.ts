@@ -16,6 +16,7 @@ export interface CurrencyPartProps extends DetailedHTMLProps<HTMLAttributes<HTML
 	horizontalAlign?: TypeAlign;
 	propPercent?: string;
 	propStrip?: StripModel;
+	handleTooltip?: (state: boolean) => void;
 	tooltipText?: string;
 	additionalInfo?: additionalInformationCurrencyPart[];
 }

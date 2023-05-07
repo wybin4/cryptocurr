@@ -1,5 +1,9 @@
 .currencyDetails {
-	margin: 40px;
+	padding: 40px;
+}
+
+.bluredScreen {
+	filter: blur(3px);
 }
 
 @media (min-width: 1211px) {

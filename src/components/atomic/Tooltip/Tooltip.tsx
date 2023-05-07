@@ -5,6 +5,7 @@ import { Strip } from '../Strip/Strip';
 import { ForwardedRef, ReactNode, createContext, forwardRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { getTimeString } from '../../../helpers/time';
+import { Button } from '../Button/Button';
 
 interface ITooltipContext {
 	showTooltip: (tooltip: TooltipModel, position: { x: number; y: number }) => void;
@@ -50,7 +51,13 @@ export const TooltipProvider = ({ children }: IProps): JSX.Element => {
 	);
 };
 
-export const Tooltip = forwardRef(({ x, y, tooltip, className, ...props }: TooltipProps, ref: ForwardedRef<HTMLDivElement>): JSX.Element => {
+export const Tooltip = forwardRef(({ handleCloseClick, x, y, tooltip, className, ...props }: TooltipProps, ref: ForwardedRef<HTMLDivElement>): JSX.Element => {
+	const handleClick = () => {
+		if (handleCloseClick) {
+			handleCloseClick();
+		}
+	};
+
 	return (
 		<div
 			className={cn(className, {
@@ -92,6 +99,7 @@ export const Tooltip = forwardRef(({ x, y, tooltip, className, ...props }: Toolt
 			{tooltip.text && <>
 				<div className={styles.infoText}>{tooltip.text}</div>
 			</>}
+			{window.innerWidth <= 500 && <Button color='grey' className={styles.closeButton} onClick={handleClick}>Закрыть</Button>}
 		</div>
 	);
 });

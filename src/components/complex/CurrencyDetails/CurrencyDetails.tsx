@@ -23,12 +23,16 @@ export const CurrencyDetails = ({ className, ...props }: CurrencyDetailsProps): 
 	const [data, setData] = useState<CurrencyModel>();
 	const [chartData, setChartData] = useState<ChartModel[]>();
 	const [interval, setInterval] = useState<IntervalType>('w1');
+	const [showTooltip, setShowTooltip] = useState(false);
 
 	const [BTCData, setBTCData] = useState<CurrencyModel>();
 	const [ETHData, setETHData] = useState<CurrencyModel>();
 	const [minMax, setMinMax] = useState<{ minPrice: number, maxPrice: number }>();
 	const [stats, setStats] = useState<boolean>(false);
 
+	const handleDataFromTooltip = (state: boolean) => {
+		setShowTooltip(state);
+	};
 	// const getFDMC = (): number | undefined => {
 	// 	if (!data) {
 	// 		return;
@@ -136,9 +140,13 @@ export const CurrencyDetails = ({ className, ...props }: CurrencyDetailsProps): 
 	};
 	return (
 		<>
+			<div id='tooltipPortal'></div>
 			{data &&
 				<div
-					className={cn(className, styles.currencyDetails)}
+					id='underTooltip'
+					className={cn(className, styles.currencyDetails, {
+						[styles.bluredScreen]: showTooltip && window.innerWidth <= 500
+					})}
 					{...props}
 				>
 					<div className={styles.leftNav}>
@@ -232,6 +240,7 @@ export const CurrencyDetails = ({ className, ...props }: CurrencyDetailsProps): 
 								propValue={data.marketCapUsd}
 								propSymbol='$'
 								horizontalAlign='start'
+								handleTooltip={handleDataFromTooltip}
 								tooltipText={whatIsCap}
 								additionalInfo={[{ addName: 'Объём за 24ч / Рыночная капитализация', addValue: (parseFloat(data.volumeUsd24Hr) / parseFloat(data.marketCapUsd)).toString() }]}
 							/>
@@ -242,6 +251,7 @@ export const CurrencyDetails = ({ className, ...props }: CurrencyDetailsProps): 
 								propValue={data.volumeUsd24Hr}
 								propSymbol='$'
 								horizontalAlign='start'
+								handleTooltip={handleDataFromTooltip}
 								tooltipText={whatIsVolume}
 							/>
 							{data.maxSupply &&
@@ -252,6 +262,7 @@ export const CurrencyDetails = ({ className, ...props }: CurrencyDetailsProps): 
 									propValue={data.supply}
 									propSymbol={' ' + data.symbol}
 									horizontalAlign='end'
+									handleTooltip={handleDataFromTooltip}
 									tooltipText={whatIsSupply}
 									propStrip={{ max: parseFloat(data.maxSupply), fill: parseFloat(data.supply) }}
 									additionalInfo={[{ addName: 'Максимальное предложение', addValue: data.maxSupply, addTooltipText: whatIsMaxSupply },
@@ -266,6 +277,7 @@ export const CurrencyDetails = ({ className, ...props }: CurrencyDetailsProps): 
 									propValue={data.supply}
 									propSymbol={' ' + data.symbol}
 									horizontalAlign='end'
+									handleTooltip={handleDataFromTooltip}
 									tooltipText={whatIsSupply}
 									additionalInfo={[{ addName: 'Максимальное предложение', addValue: '--', addTooltipText: whatIsMaxSupply },
 									{ addName: 'Общее предложение', addValue: data.supply, addTooltipText: whatIsSupply }]}

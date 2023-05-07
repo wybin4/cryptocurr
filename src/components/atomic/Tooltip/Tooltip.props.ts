@@ -24,4 +24,5 @@ export interface TooltipProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivEl
 	tooltip: TooltipModel;
 	x: number;
 	y: number;
+	handleCloseClick?: () => void;
 }

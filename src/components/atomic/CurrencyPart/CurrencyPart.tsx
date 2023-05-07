@@ -5,8 +5,7 @@ import { getCommas, getFixedSymbols, min4Digits } from '../../../helpers/convert
 import { Strip } from '../Strip/Strip';
 import { InfoIcon } from '../InfoIcon/InfoIcon';
 
-
-export const CurrencyPart = ({ horizontalAlign, propName, propValue, propSymbol, propPercent, propStrip, tooltipText, additionalInfo, className, ...props }: CurrencyPartProps): JSX.Element => {
+export const CurrencyPart = ({ handleTooltip, horizontalAlign, propName, propValue, propSymbol, propPercent, propStrip, tooltipText, additionalInfo, className, ...props }: CurrencyPartProps): JSX.Element => {
 
 	return (
 		<div
@@ -18,7 +17,7 @@ export const CurrencyPart = ({ horizontalAlign, propName, propValue, propSymbol,
 				<div className={styles.namePart}>
 					<div className={styles.nameTipDiv}>
 						<div className={styles.name}>{propName}</div>
-						{tooltipText && <InfoIcon tooltipText={tooltipText} className={styles.tip} />}
+						{tooltipText && <InfoIcon handleTooltip={handleTooltip} tooltipText={tooltipText} className={styles.tip} />}
 					</div>
 					<div className={styles.value}>
 						{horizontalAlign === 'start' && <span>{propSymbol}</span>}

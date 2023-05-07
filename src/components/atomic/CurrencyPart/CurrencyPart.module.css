@@ -68,6 +68,7 @@
 	margin-top: 2px;
 }
 
+
 .addInfoDiv {
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
