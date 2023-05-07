@@ -11,7 +11,7 @@
 
 Второй маршрут
 
-<img width="600px" src="https://github.com/wybin4/cryptocurr/blob/main/public/bigScreen.PNG"/><img width="300px" src="https://github.com/wybin4/cryptocurr/blob/main/public/littleScreen1.PNG"/>
+<img width="600px" src="https://github.com/wybin4/cryptocurr/blob/main/public/bigScreen.png"/><img width="300px" src="https://github.com/wybin4/cryptocurr/blob/main/public/littleScreen1.PNG"/>
 
 ## Особенности
 ### Доступны два маршрута:
