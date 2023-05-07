@@ -4,6 +4,7 @@ import * as d3 from 'd3';
 // import styles from './Chart.module.css';
 import { Tooltip } from '../Tooltip/Tooltip';
 import { motion } from 'framer-motion';
+import { timeFormatDefaultLocale } from 'd3';
 
 export const Chart = ({ data, name, ...props }: ChartProps): JSX.Element => {
 
@@ -37,6 +38,21 @@ export const Chart = ({ data, name, ...props }: ChartProps): JSX.Element => {
 		containerHeight: 0,
 	});
 	const [ticksCount, setTicksCount] = useState<number | undefined>(getTicksCount(window.innerWidth));
+
+	const localeRU: d3.TimeLocaleDefinition = {
+		dateTime: '%A, %e %B %Y г. %X',
+		date: '%d.%m.%Y',
+		time: '%H:%M:%S',
+		periods: ['AM', 'PM'],
+		days: ['воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота'],
+		shortDays: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
+		months: [
+			'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'
+		],
+		shortMonths: ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек']
+	};
+
+	timeFormatDefaultLocale(localeRU);
 
 	useEffect(() => {
 
@@ -142,9 +158,8 @@ export const Chart = ({ data, name, ...props }: ChartProps): JSX.Element => {
 					.attr("cx", xScale(xAccessor(hoveredIndexData)))
 					.attr("cy", yScale(yAccessor(hoveredIndexData)))
 					.raise();
-
 				setTooltipData(hoveredIndexData);
-				setTooltipXY({ x: xScale(hoveredIndexData.time), y: yScale(hoveredIndexData.priceUsd - 1500) });
+				setTooltipXY({ x: xScale(hoveredIndexData.time), y: mousePos[1] + 300 });
 			})
 			.on("mouseleave", function () {
 				tooltipDot.style("opacity", 0);
