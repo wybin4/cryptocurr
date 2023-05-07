@@ -1,46 +1,48 @@
-# Getting Started with Create React App
+# Криптовалютный сервис на React
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Этот проект представляет собой небольшой сервис о криптовалюте, разработанный с использованием (CoinCap API)[https://docs.coincap.io/] и написанный на React с использованием маршрутизации React Router.
 
-## Available Scripts
+## Описание
+Сервис предоставляет информацию о топовых криптовалютах и подробные данные по отдельным валютам. Он использует CoinCap API для получения актуальных данных о криптовалютах, включая цены, рыночную капитализацию, объемы торгов и другую статистику.
 
-In the project directory, you can run:
+## Особенности
+### Доступны два маршрута:
 
-### `npm start`
+/ - отображает список топовых криптовалют с их основной информацией, такой как имя, цена, изменение за последние 24 часа и другие параметры.
+/currencies/{id} - отображает подробную информацию о выбранной валюте, включая исторические данные, графики и другую статистику.
+### Визуализация данных:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Для отображения спарклайнов и графиков использована библиотека d3.js. Спарклайны позволяют быстро оценить изменение цены криптовалюты за определенный период времени.
+Для повышения производительности и быстрого отображения спарклайнов, реализовано кэширование.
+### Анимации:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Для создания небольших анимаций в интерфейсе использована библиотека framer-motion. Это помогает сделать пользовательский опыт более интерактивным и привлекательным.
+## Требования
+Для запуска проекта необходимо иметь установленные следующие компоненты:
 
-### `npm test`
+- Node.js
+- NPM (Node Package Manager)
+## Установка
+Склонируйте репозиторий с помощью следующей команды:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+Copy code
+git clone https://github.com/wybin4/cryptocurr.git
+```
+Перейдите в директорию проекта:
 
-### `npm run build`
+```
+cd cryptocurr
+```
+Установите зависимости:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+npm install
+```
+## Запуск
+После завершения установки можно запустить проект с помощью команды:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+```
+npm start
+```
+Откройте браузер и перейдите по адресу http://localhost:3000
