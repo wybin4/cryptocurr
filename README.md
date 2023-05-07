@@ -26,7 +26,6 @@
 Склонируйте репозиторий с помощью следующей команды:
 
 ```
-Copy code
 git clone https://github.com/wybin4/cryptocurr.git
 ```
 Перейдите в директорию проекта:
