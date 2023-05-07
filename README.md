@@ -5,7 +5,7 @@
 ## Описание
 Сервис предоставляет информацию о топовых криптовалютах и подробные данные по отдельным валютам. Он использует CoinCap API для получения актуальных данных о криптовалютах, включая цены, рыночную капитализацию, объемы торгов и другую статистику.
 
-<img width="500px" src="https://github.com/wybin4/cryptocurr/blob/main/public/bigScreen.PNG"/>
+<img width="700px" src="https://github.com/wybin4/cryptocurr/blob/main/public/bigScreen.PNG"/>
 
 ## Особенности
 ### Доступны два маршрута:
