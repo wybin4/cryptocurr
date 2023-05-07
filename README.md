@@ -9,7 +9,7 @@
 
 <img width="700px" src="https://github.com/wybin4/cryptocurr/blob/main/public/bigScreen.PNG"/>
 
-<img width="300px" src="https://github.com/wybin4/cryptocurr/blob/main/public/littleScreen.PNG"/>
+<img width="300px" src="https://github.com/wybin4/cryptocurr/blob/main/public/littleScreen1.PNG"/>
 
 ## Особенности
 ### Доступны два маршрута:
