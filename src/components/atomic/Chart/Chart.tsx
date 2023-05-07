@@ -18,8 +18,10 @@ export const Chart = ({ data, name, ...props }: ChartProps): JSX.Element => {
 		if (windowWidth >= 1100) { return 500; } else return windowWidth / 2;
 	}
 	const getTicksCount = (windowWidth: number) => {
-		if (windowWidth <= 600 && windowWidth > 410) {
+		if (windowWidth <= 600 && windowWidth > 500) {
 			return 8;
+		} else if (windowWidth <= 500 && windowWidth > 410) {
+			return 6;
 		} else if (windowWidth <= 410 && windowWidth > 310) {
 			return 5;
 		} else if (windowWidth <= 310) {
