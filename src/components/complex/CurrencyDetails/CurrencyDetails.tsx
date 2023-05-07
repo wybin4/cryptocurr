@@ -16,13 +16,13 @@ import { min4Digits } from '../../../helpers/convert';
 import { Strip } from '../../atomic/Strip/Strip';
 import { Button } from '../../atomic/Button/Button';
 import { Chart } from '../../atomic/Chart/Chart';
-import { ChartModel, IntervalType } from '../../atomic/Chart/Chart.props';
+import { ChartModel, FrequencyType, IntervalType } from '../../atomic/Chart/Chart.props';
 
 export const CurrencyDetails = ({ className, ...props }: CurrencyDetailsProps): JSX.Element => {
 	const { name } = useParams<{ name: string }>();
 	const [data, setData] = useState<CurrencyModel>();
 	const [chartData, setChartData] = useState<ChartModel[]>();
-	const [interval, setInterval] = useState<IntervalType>('w1');
+	const [interval, setInterval] = useState<IntervalType>('d1');
 	const [showTooltip, setShowTooltip] = useState(false);
 
 	const [BTCData, setBTCData] = useState<CurrencyModel>();
@@ -33,16 +33,6 @@ export const CurrencyDetails = ({ className, ...props }: CurrencyDetailsProps): 
 	const handleDataFromTooltip = (state: boolean) => {
 		setShowTooltip(state);
 	};
-	// const getFDMC = (): number | undefined => {
-	// 	if (!data) {
-	// 		return;
-	// 	}
-	// 	if (data.maxSupply) {
-	// 		return parseFloat(data.maxSupply) * parseFloat(data.priceUsd);
-	// 	} else {
-	// 		return parseFloat(data.supply) * parseFloat(data.priceUsd);
-	// 	}
-	// }
 
 	const getMinMax = async () => {
 		const now = Date.now();
@@ -109,7 +99,6 @@ export const CurrencyDetails = ({ className, ...props }: CurrencyDetailsProps): 
 
 	useEffect(() => {
 		getData();
-		fetchChartData();
 		if (name !== 'bitcoin') {
 			getBTC();
 		} if (name !== 'ethereum') {
@@ -119,6 +108,10 @@ export const CurrencyDetails = ({ className, ...props }: CurrencyDetailsProps): 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
+	useEffect(() => {
+		fetchChartData();
+	}, [interval])
+
 	const INTERVAL_IN_MS: Record<IntervalType, number> = {
 		d1: 24 * 60 * 60 * 1000,
 		w1: 7 * 24 * 60 * 60 * 1000,
@@ -127,10 +120,27 @@ export const CurrencyDetails = ({ className, ...props }: CurrencyDetailsProps): 
 		y1: 365 * 24 * 60 * 60 * 1000,
 	};
 
+	const INTERVAL_NAMES: { key: IntervalType; value: string }[] = [
+		{ key: 'd1', value: '1Д' },
+		{ key: 'w1', value: '1Н' },
+		{ key: 'm1', value: '1М' },
+		{ key: 'm3', value: '3М' },
+		{ key: 'y1', value: '1Г' },
+	];
+
+	const INTERVAL_FREQUENCY: Record<IntervalType, FrequencyType> = {
+		d1: 'm5',
+		w1: 'm30',
+		m1: 'h1',
+		m3: 'h1',
+		y1: 'h6',
+	};
+
 	const fetchChartData = async () => {
 		const now = Date.now();
 		const start = now - INTERVAL_IN_MS[interval];
-		const response = await axios.get(`https://api.coincap.io/v2/assets/${name}/history?interval=h1&start=${start}&end=${now}`);
+		const freq = INTERVAL_FREQUENCY[interval];
+		const response = await axios.get(`https://api.coincap.io/v2/assets/${name}/history?interval=${freq}&start=${start}&end=${now}`);
 		setChartData(response.data.data.map((point: ChartModel) => ({
 			priceUsd: point.priceUsd,
 			time: new Date(point.time),
@@ -284,6 +294,19 @@ export const CurrencyDetails = ({ className, ...props }: CurrencyDetailsProps): 
 								/>
 							}
 						</div>
+					</div>
+					<div className={styles.buttonDiv}>
+						{INTERVAL_NAMES.map(({ key, value }) => (
+							<Button
+								className={cn({
+									[styles.buttonActive]: key === interval
+								})}
+								onClick={() => setInterval(key)}
+								color={'grey'}
+							>
+								{value}
+							</Button>
+						))}
 					</div>
 					<div className={styles.chartDiv}>
 						{name && chartData && <Chart data={chartData}

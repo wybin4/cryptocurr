@@ -39,6 +39,10 @@
 		gap: 10px;
 	}
 
+	.buttonDiv {
+		grid-column: start / medium;
+	}
+
 	.minMaxStrip {
 		width: 200px;
 	}
@@ -55,6 +59,7 @@
 			'nav .'
 			'header price'
 			'addinfo addinfo'
+			'buttons .'
 			'chart chart'
 		;
 		grid-template-columns: auto auto;
@@ -68,6 +73,10 @@
 
 	.leftPart {
 		grid-area: header;
+	}
+
+	.buttonDiv {
+		grid-area: buttons;
 	}
 
 	.rightHeader {
@@ -116,10 +125,15 @@
 			'price'
 			'more'
 			'addinfo'
+			'buttons'
 			'chart'
 		;
 		grid-template-columns: auto;
 		gap: 30px;
+	}
+
+	.buttonDiv {
+		grid-area: buttons;
 	}
 
 	.rightAdd {
@@ -403,4 +417,29 @@
 .chartDiv {
 	width: 100vh;
 	height: 500px;
+}
+
+.buttonDiv {
+	display: flex;
+	background-color: var(--light-grey);
+	border-radius: 11px;
+
+	padding: 4px 3px;
+	margin-top: 20px;
+
+	width: fit-content;
+}
+
+.buttonDiv button {
+	padding: 9px 11px;
+
+	font-size: 12px;
+
+	text-align: center;
+
+	color: var(--dark-grey-text);
+}
+
+.buttonActive {
+	background-color: var(--white);
 }
